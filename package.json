@@ -1,0 +1,31 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "description": "Projeto de Microsservicos com implementacao de CQRS com Kafka",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "jsonwebtoken": "^8.5.1",
+    "kafka-node": "^5.0.0",
+    "pg": "^8.7.1",
+    "serverless-plugin-typescript": "^2.1.0",
+    "typescript": "^4.5.2",
+    "uuid": "^8.3.2",
+    "serverless-offline": "^8.3.0"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "minimist": "^1.2.5",
+    "mocked-env": "^1.3.5",
+    "serverless-dotenv-plugin": "^3.10.0"
+    
+  },
+  "scripts": {
+    "start": "npx sls offline start",
+    "test": "jest"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
+  },
+  "author": "Alexsander Melo",
+  "license": "ISC"
+}
