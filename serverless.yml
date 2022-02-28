@@ -11,7 +11,8 @@
 #
 # Happy Coding!
 
-service: command
+service: 
+    name: application
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name

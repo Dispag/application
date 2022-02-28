@@ -1,4 +1,4 @@
-const {registrarDebito} = require("../command/registrar-debito-handler")
+const {registrarDebito} = require("../../command/registrar-debito-handler")
 const mockedEnv = require('mocked-env')
 var jwt = require('jsonwebtoken') 
 

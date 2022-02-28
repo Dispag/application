@@ -1,5 +1,5 @@
 //'use strict';
-const commandReponse = require('./command-response')
+const commandReponse = require('../../../../command/command-response')
 const {instance: eventSource}  = require('../conf/event-source')
 const {execVerify} = require('../auth/verify-token')
 

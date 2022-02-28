@@ -2,7 +2,7 @@
 
 const {saldosDebitosNoMes} = require('../repository/debitos-repository')
 const {detalhesDebitosNoMes} = require('../repository/debitos-repository')
-const {run} = require('./query')
+const {run} = require('../../../../query/query')
 
 
 module.exports.saldosmes = async event => {

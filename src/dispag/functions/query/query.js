@@ -1,4 +1,4 @@
-const {responseCode: respcod}  = require('../conf/response-code')
+const {responseCode: respcod}  = require('../../../conf/response-code')
 const {execVerify} = require('../auth/verify-token')
 
 const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../exceptions/exception')
