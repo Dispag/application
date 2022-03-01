@@ -6,10 +6,10 @@ const {run} = require('../query');
 
 module.exports.saldosmes = async event => {
 
-   return run(event, saldosDebitosNoMes)
+   return await run(event, saldosDebitosNoMes)
 }
 
 module.exports.datelhes = async event => {
 
-    return run(event, detalhesDebitosNoMes)
+    return await run(event, detalhesDebitosNoMes)
 }

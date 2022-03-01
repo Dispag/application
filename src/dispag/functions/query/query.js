@@ -12,17 +12,21 @@ module.exports.run = async (event, repository)=>{
     try{
 
         execVerify(event);
+        
         const result = await repository(jsonBody);
-        return successWithThisBodyReturn(event, JSON.stringify(result));
+
+
+        return successWithThisBodyReturn(JSON.stringify(result));
                          
     }catch (exception) {
+        console.log(exception);
         if (exception instanceof TokenExpiradoError) {
             
-            return tokenNaoAutorizadoReturn(event)
+            return tokenNaoAutorizadoReturn(event);
         }
         if (exception instanceof AusenciaHeadersFundamentaisError){
             
-            return ausenciaHeadersFundamentaisReturn(event)
+            return ausenciaHeadersFundamentaisReturn(event);
         }
     }
 }

@@ -1,0 +1,7 @@
+query-detalhes-debitos-no-mes:
+      name: detahesdebitosnomes-lb
+      handler: src/dispag/functions/query/debitos/debitos-handler.datelhes
+      events:
+          - http:
+              method: post
+              path: query/datelhes/debitos/no/mes

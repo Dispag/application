@@ -1,0 +1,7 @@
+query-saldos-debitos-no-mes:
+      name: saldosdebitosnomes-lb
+      handler: src/dispag/functions/query/debitos/debitos-handler.saldosmes
+      events:
+          - http:
+              method: post
+              path: query/saldos/debitos/no/mes
