@@ -1,8 +1,7 @@
 'use strict';
 
-const {saldosDebitosNoMes} = require('../repository/debitos-repository')
-const {detalhesDebitosNoMes} = require('../repository/debitos-repository')
-const {run} = require('../../../../query/query')
+const {saldosDebitosNoMes, detalhesDebitosNoMes} = require('../../../../libs/repositories/debitos-repository');
+const {run} = require('../query');
 
 
 module.exports.saldosmes = async event => {

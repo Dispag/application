@@ -1,29 +1,28 @@
-const {responseCode: respcod}  = require('../../../conf/response-code')
-const {execVerify} = require('../auth/verify-token')
+const {successWithThisBodyReturn, 
+    tokenNaoAutorizadoReturn, 
+    ausenciaHeadersFundamentaisReturn}  = require('../../helpers/response-code');
+const {execVerify} = require('../../../libs/auth/verify-token');
 
-const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../exceptions/exception')
-const {TokenExpiradoError: TokenExpiradoError} = require('../exceptions/exception')
-
+const {AusenciaHeadersFundamentaisError, TokenExpiradoError} = require('../../../libs/erros/exception')
 
 module.exports.run = async (event, repository)=>{
 
-    const jsonBody = JSON.parse( event.body)
+    const jsonBody = JSON.parse( event.body);
 
     try{
 
-        execVerify(event)
-        return repository(jsonBody)
-                            .then(res => {
-                                return respcod.successWithThisBodyReturn(event, JSON.stringify(res))
-                            })
+        execVerify(event);
+        const result = await repository(jsonBody);
+        return successWithThisBodyReturn(event, JSON.stringify(result));
+                         
     }catch (exception) {
         if (exception instanceof TokenExpiradoError) {
             
-            return respcod.tokenNaoAutorizadoReturn(event)
+            return tokenNaoAutorizadoReturn(event)
         }
         if (exception instanceof AusenciaHeadersFundamentaisError){
             
-            return respcod.ausenciaHeadersFundamentaisReturn(event)
+            return ausenciaHeadersFundamentaisReturn(event)
         }
     }
 }
