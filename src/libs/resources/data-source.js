@@ -1,3 +1,6 @@
+require('dotenv').config({  
+    path: process.env.NODE_ENV === "test" | process.env.NODE_ENV === "dev" ? ".env.test" : ".env",
+});
 const { Pool } = require('pg');
 
 const data_source_pool = new Pool({

@@ -13,127 +13,129 @@ const NOT_IMPLEMENTED = 501
 const BAD_GATEWAY = 502
 const SERVICE_UNAVAILABLE = 503
 
-let responseCode = {
+const successDefault = params =>{
 
-    successDefault : function (event){
-        return {
-            statusCode: OK,
-            body: JSON.stringify(
-              {
-                message: 'Operacao Realizada Com Sucesso!',
-                input: event,
-              },
-              null,
-              2
-            ),
-          }
-    },
+  return {
+    statusCode: OK,
+    body: JSON.stringify(
+      {
+        message: 'Operacao Realizada Com Sucesso!',
+        input: params,
+      },
+      null,
+      2
+    ),
+  };
+};
 
-    successWithThisBodyReturn : function (event, pbody){
+const successWithThisBodyReturn = params => {
+
+  return {
+    statusCode: OK,
+    body: params,
+  };
+};
+
+const acceptedWithThismessageReturn = msg => {
+  return {
+      statusCode: ACCEPTED,
+      body: JSON.stringify(
+          {
+            message: msg,
+          },
+          null,
+          2
+        ),
+    };
+};
+
+const tokenNaoAutorizadoReturn = () => {
         
-      return {
-            statusCode: OK,
-            body: pbody,
-          }
-    },
+  return {
+        statusCode: UNAUTHORIZED,
+        body: JSON.stringify(
+          {
+            auth: false,
+            message: 'Falha ao autenticar'
+          },
+          null,
+          2
+        ),
+      };
+};
 
-    acceptedWithThismessageReturn : function (msg){
-        return {
-            statusCode: ACCEPTED,
-            body: JSON.stringify(
-                {
-                  message: msg,
-                },
-                null,
-                2
-              ),
-          }
-    },
-
-    tokenNaoAutorizadoReturn : function (event){
+const serviceUnavailableReturn =  params => {
         
-      return {
-            statusCode: UNAUTHORIZED,
-            body: JSON.stringify(
-              {
-                auth: false,
-                message: 'Falha ao autenticar'
-              },
-              null,
-              2
-            ),
-          }
-    },
+  return {
+        statusCode: SERVICE_UNAVAILABLE,
+        body: JSON.stringify(
+          {
+            auth: false,
+            message: 'O servidor não está pronto para manipular a requisição',
+            input: params.body
+          },
+          null,
+          2
+        ),
+      };
+};
 
-    serviceUnavailableReturn : function (event){
+const ausenciaHeadersFundamentaisReturn = () => {
         
-      return {
-            statusCode: SERVICE_UNAVAILABLE,
-            body: JSON.stringify(
-              {
-                auth: false,
-                message: 'O servidor não está pronto para manipular a requisição',
-                input: event.body
-              },
-              null,
-              2
-            ),
-          }
-    },
+  return {
+        statusCode: UNAUTHORIZED,
+        body: JSON.stringify(
+          {
+            auth: false,
+            message: 'Ausencia de Headers Fundamentais para Requisicao'
+          },
+          null,
+          2
+        )
+  };    
+};
 
-    ausenciaHeadersFundamentaisReturn : function (event){
+const autenticadoReturn = params => {
         
-      return {
-            statusCode: UNAUTHORIZED,
-            body: JSON.stringify(
-              {
-                auth: false,
-                message: 'Ausencia de Headers Fundamentais para Requisicao'
-              },
-              null,
-              2
-            ),
-          }
-    },
+  return {
+        statusCode: OK,
+        headers: {
+          'token': params.token,
+        },
+        body: JSON.stringify(
+          {
+            authentication: true,
+            user: params.user,
+            "uuid": params.uuid
+          },
+          null,
+          2
+        ),
+      };
+};
 
-    autenticadoReturn : function (token, user, uuid){
+const naoAutenticadoReturn = () =>{
         
-      return {
-            statusCode: OK,
-            headers: {
-              'token': token,
-            },
-            body: JSON.stringify(
-              {
-                authentication: true,
-                user: user,
-                "uuid": uuid
-              },
-              null,
-              2
-            ),
-          }
-    },
-
-    naoAutenticadoReturn : function (){
-        
-      return {
-            statusCode: UNAUTHORIZED,
-            body: JSON.stringify(
-              {
-                auth: false,
-                message: 'Nao Autenticado'
-              },
-              null,
-              2
-            ),
-          }
-    },
-
-}
-
-
+  return {
+        statusCode: UNAUTHORIZED,
+        body: JSON.stringify(
+          {
+            auth: false,
+            message: 'Nao Autenticado'
+          },
+          null,
+          2
+        ),
+      };
+};
 
 module.exports = {
-    responseCode
+  successDefault,
+  successWithThisBodyReturn,
+  acceptedWithThismessageReturn,
+  tokenNaoAutorizadoReturn,
+  serviceUnavailableReturn,
+  ausenciaHeadersFundamentaisReturn,
+  autenticadoReturn,
+  naoAutenticadoReturn
 }

@@ -11,21 +11,29 @@
 #
 # Happy Coding!
 
-service: 
-    name: application
+service: application
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
 
+  environment:
+    KAFKA_ENABLE: 'OFF'
+    KAFKA_SERVER: 'localhost:9094'
+    SECRET: '#jequiladispag@$12'
+    DB_USER: 'programador'
+    DB_HOST: 'localhost'
+    DB_NAME: 'tarefas'
+    DB_PASSWORD: 'hidros'
+    DB_PORT: 5432
 # you can overwrite defaults here
 #  stage: dev
   region: us-east-2
@@ -69,79 +77,9 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
+   - ${file(./src/dispag/functions/auth/auth.yml)}
   #==> COMMAND
-  command-novodebito:
-        name: command-registrar-debito-lb
-        handler: command/registrar-debito-handler.registrarDebito
-        events:
-            - http:
-                method: post
-                path: command/registrardebito
-
-  command-pagardebito:
-        name: command-pagardebito-lb
-        handler: command/pagardebito-handler.pagardebito
-        events:
-            - http:
-                method: post
-                path: command/pagardebito
-
-  command-excluirdebito:
-        name: command-excluirdebito-lb
-        handler: command/excluirdebito-handler.excluirdebito
-        events:
-            - http:
-                method: delete
-                path: command/excluirdebito
-
-  command-novoorcamento:
-        name: command-novoorcamento-lb
-        handler: command/novoorcamento-handler.novoorcamento
-        events:
-            - http:
-                method: post
-                path: command/novoorcamento
-
-  command-excluirorcamento:
-        name: command-excluirorcamento-lb
-        handler: command/excluirorcamento-handler.excluirorcamento
-        events:
-            - http:
-                method: delete
-                path: command/excluirorcamento
-  #==> AUTH
-  auth:
-        name: auth-lb
-        handler: auth/auth-handler.login
-        events:
-            - http:
-                method: post
-                path: auth/login
-
-  #==> QUERY
-  query-saldos-debitos-no-mes:
-        name: saldosdebitosnomes-lb
-        handler: query/debitos-handler.saldosmes
-        events:
-            - http:
-                method: post
-                path: query/saldos/debitos/no/mes
-
-  query-detalhes-debitos-no-mes:
-        name: detahesdebitosnomes-lb
-        handler: query/debitos-handler.datelhes
-        events:
-            - http:
-                method: post
-                path: query/datelhes/debitos/no/mes
-
-  query-orcamento-no-mes:
-        name: orcamentoanomes-lb
-        handler: query/orcamento-handler.orcamentoanomes
-        events:
-            - http:
-                method: post
-                path: query/orcamento/no/mes  
+  
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

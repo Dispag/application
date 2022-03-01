@@ -1,34 +1,41 @@
-'use strict';
-var jwt = require('jsonwebtoken') // package jwt 
+var jwt = require('jsonwebtoken') 
 const uuid = require ("uuid");
-const usuarioRepository = require('../repository/usuario-repository')
-const {responseCode: respcod}  = require('../conf/response-code')
+const usuarioRepository = require('../../../libs/repositories/usuario-repository');
+const {autenticadoReturn, naoAutenticadoReturn}  = require('../../helpers/response-code');
 
 
 const getToken = data =>{
-  
   const token =  jwt.sign({ id: data.user, senha: data.passwd }, process.env.SECRET, {
     expiresIn: 86400 // validade do token, 24hrs
-   })
-  return respcod.autenticadoReturn(token, data.user, uuid.v1())
+  });
+
+  const params= {
+    token, 
+    user: data.user, 
+    uuid: uuid.v1()
+  };
+
+  return autenticadoReturn(params);
 }
 
-const implementsLogin = async (event, repository)=>{
+const login = async (event)=>{
 
-  const data = JSON.parse(event.body)
-  return repository.authenticate(data)
-          .then(res => {return res?  getToken(data): respcod.naoAutenticadoReturn()})
-          .catch(()=> {return respcod.naoAutenticadoReturn()})
-}
+  try{
 
-const login = event => {
+    const data = JSON.parse(event.body);
+    const res = await usuarioRepository.authenticate(data);
+    return res?  getToken(data): naoAutenticadoReturn();
+  
+  }catch(err){
 
-  return implementsLogin(event, usuarioRepository)
+    return naoAutenticadoReturn();
+  }
+  
 }
 
 const verificartk = async event => {
   
-  const token  = event.headers.token
+  const token  = event.headers.token;
   if (!token) 
     return res.status(403).send({ auth: false, message: 'Informe um token' });
 
@@ -54,7 +61,6 @@ const verificartk = async event => {
 };
 
 module.exports = {
-  implementsLogin,
   login,
   verificartk
 }

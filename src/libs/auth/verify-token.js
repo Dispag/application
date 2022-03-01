@@ -7,12 +7,13 @@ const validarTokenExpirado = event =>{
   console.log('[VERIFY-TOKEN] Iniciar validar Token Expirado');
   jwt.verify(event.headers.token, process.env.SECRET, function(err, decoded) {      
     if (err){ 
-      console.error('[VERIFY-TOKEN] Token Expirado');
+      
       throw new TokenExpiradoError("Token Expirado");
     }
   });
 
   console.log(`[VERIFY-TOKEN] Finalizar validar Token Expirado ${event.headers.token}`);
+  return 'OK';
 }
   
 const existHeadertkuuid = event =>{

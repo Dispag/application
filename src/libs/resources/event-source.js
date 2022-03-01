@@ -1,6 +1,7 @@
 const kafka = require('kafka-node');
 
 
+
 //funcao acionada qdo a conexão com o kafka esta off
 const pushOFF = async params =>{
 
@@ -36,16 +37,28 @@ const buildingMessageToTopic = params=>{
 
 //funcao acionada qdo a conexão com o kafka esta On
 const pushON= async params =>{
- 
-  console.log(`[EVENT-SOURCE] Iniciar Push kafka-producer Topic-> ${params.topic}`);
-  const message = buildingMessageToTopic(params);
-  const client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_SERVER});
-  const producer = new kafka.Producer(client);
-  producer.on('ready', () => {producer.send(message, producerReturnSent)}) 
-  console.log(`[EVENT-SOURCE] Finalizado Push kafka-producer Topic-> ${params.body}`) 
+
+  let client;
+  try{
+
+    console.log(`[EVENT-SOURCE] Iniciar Push kafka-producer Topic-> ${params.topic}`);
+    const message = buildingMessageToTopic(params);
+    client = await new kafka.KafkaClient({kafkaHost: process.env.KAFKA_SERVER});
+    const producer = await new kafka.Producer(client);
+    producer.on('ready', async () => {await producer.send(message, producerReturnSent)});
+    const result  = `[EVENT-SOURCE] Finalizado Push kafka-producer Topic-> ${params.body}`;
+    console.log(result);
+    return  result;
+  }catch (err){
+
+      console.error(err);
+  }finally{
+    client.close();
+  }
 }
 
-module.exports.instance = {
-  
-  push : process.env.KAFKA_ENABLE === 'OFF'?pushOFF:pushON
+
+module.exports = {
+
+  push :  process.env.KAFKA_ENABLE === 'OFF'?pushOFF:pushON
 }

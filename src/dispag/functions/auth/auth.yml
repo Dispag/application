@@ -1,0 +1,7 @@
+auth:
+      name: auth-lb
+      handler: src/dispag/functions/auth/auth-handler.login
+      events:
+          - http:
+              method: post
+              path: auth/login
