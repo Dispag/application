@@ -24,6 +24,8 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=dev npx sls offline start --stage dev",
+    "deploy": "cross-env NODE_ENV=prd npx sls deploy --stage prd",
+    "undeploy": "cross-env NODE_ENV=prd npx sls remove",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "resolutions": {
