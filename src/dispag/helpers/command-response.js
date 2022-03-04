@@ -1,30 +1,30 @@
-const {responseCode: respcod}  = require('../conf/response-code')
-const {PushTopicError} = require('../exceptions/exception')
-const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../exceptions/exception')
-const {TokenExpiradoError: TokenExpiradoError} = require('../exceptions/exception')
-
+const {tokenNaoAutorizadoReturn, 
+    ausenciaHeadersFundamentaisReturn,
+    serviceUnavailableReturn,
+    acceptedWithThismessageReturn}  = require('./response-code');
+const {PushTopicError, AusenciaHeadersFundamentaisError, TokenExpiradoError} = require('../../libs/erros/exception');
 
 const commandReponseException = params => {
 
     if (params.exception instanceof TokenExpiradoError) {
         
-        return respcod.tokenNaoAutorizadoReturn(params.event)
+        return tokenNaoAutorizadoReturn(params.event);
     }
     if (params.exception instanceof AusenciaHeadersFundamentaisError){
         
-        return respcod.ausenciaHeadersFundamentaisReturn(params.event)
+        return ausenciaHeadersFundamentaisReturn(params.event);
     }
     if (params.exception instanceof PushTopicError){
         
-        return respcod.serviceUnavailableReturn(params.event)
+        return serviceUnavailableReturn(params.event);
     }
+};
+
+const commandReponse= () =>{
+    return acceptedWithThismessageReturn('Operacao Realizada Com Sucesso, as acoes serão tomadas no decorrer do tempo');
 }
 
-
-const commandReponse = () =>{
-    
-    const MSG = 'Operacao Realizada Com Sucesso, as acoes serão tomadas no decorrer do tempo'
-    return respcod.acceptedWithThismessageReturn(`${MSG}`)  
-}
-
-module.exports = { commandReponse, commandReponseException}
+module.exports = { 
+    commandReponse, 
+    commandReponseException
+};

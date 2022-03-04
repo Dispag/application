@@ -1,0 +1,7 @@
+query-orcamento-no-mes:
+      name: orcamentoanomes-lb
+      handler: src/dispag/functions/query/orcamento/orcamento-handler.orcamentoanomes
+      events:
+          - http:
+              method: post
+              path: query/orcamento/no/mes

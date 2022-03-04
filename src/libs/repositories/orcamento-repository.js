@@ -8,5 +8,5 @@ module.exports.orcamentoAnoMes = async params => {
                     FROM tb_orcamento o WHERE o.ano = '${params.ano}' and o.mes = '${params.mes}'`
 
     const result  = await data_source_pool.query(QUERY);
-    return result.rowCount>0? res.rows: '[]';
+    return result.rowCount>0? result.rows: '[]';
 }

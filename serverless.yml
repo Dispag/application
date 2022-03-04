@@ -24,15 +24,20 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'dev'}
 
   environment:
-    KAFKA_ENABLE: 'OFF'
-    KAFKA_SERVER: 'localhost:9094'
-    SECRET: '#jequiladispag@$12'
-    DB_USER: 'programador'
-    DB_HOST: 'localhost'
-    DB_NAME: 'tarefas'
-    DB_PASSWORD: 'hidros'
+    SECRET: ${self:custom.secrete.${self:provider.stage}}
+    #Kafka
+    KAFKA_ENABLE: 'ON'
+    KAFKA_SERVER: ${self:custom.kafka_server.${self:provider.stage}}
+    KAFKATOPIC_REGISTRARDEBITO: 'REGISTRARDEBITO'
+
+    #Database
+    DB_USER: ${self:custom.db_user.${self:provider.stage}}
+    DB_HOST: ${self:custom.db_host.${self:provider.stage}}
+    DB_NAME: ${self:custom.db_name.${self:provider.stage}}
+    DB_PASSWORD: ${self:custom.db_password.${self:provider.stage}}
     DB_PORT: 5432
 # you can overwrite defaults here
 #  stage: dev
@@ -45,94 +50,41 @@ provider:
       - subnet-0bd2b902b764ad6b1
       - subnet-07699f487086588cd
   deploymentBucket:
-    name: dispag-code
+    name: dispagcode
 
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
+custom:
+  secrete:
+    dev: '#jequiladispag@$12'
+    prd: ${ssm:/dispag/secrete}
+  db_user:
+    dev: 'programador'
+    prd: ${ssm:/dispag/database/username}
+  db_password:
+    dev: 'hidros'
+    prd: ${ssm:/dispag/database/password}
+  db_name:
+    dev: 'tarefas'
+    prd: ${ssm:/dispag/database/name}
+  db_host:
+    dev: 'localhost'
+    prd: ${ssm:/dispag/database/host}
+  kafka_server:
+    dev: '172.24.170.10:9092'
+    prd: ${ssm:/dispag/kafka/server}
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
 
 functions:
-   #==> Auth
+  #==> Auth
    - ${file(./src/dispag/functions/auth/auth.yml)}
+
+  #==> Command
+   - ${file(./src/dispag/functions/command/registrar-debito/registrardebito.yml)}
+   
   #==> Query
    - ${file(./src/dispag/functions/query/debitos/saldosmes.yml)}
    - ${file(./src/dispag/functions/query/debitos/detahesdebitosnomes.yml)}
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - httpApi:
-#          path: /users/create
-#          method: get
-#      - websocket: $connect
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx
-#      - alexaSmartHome: amzn1.ask.skill.xx-xx-xx-xx
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
-#      - alb:
-#          listenerArn: arn:aws:elasticloadbalancing:us-east-1:XXXXXX:listener/app/my-load-balancer/50dc6c495c0c9188/
-#          priority: 1
-#          conditions:
-#            host: example.com
-#            path: /hello
+   - ${file(./src/dispag/functions/query/orcamento/orcamentoanomes.yml)}
 
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
-
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
 
 plugins:
       - serverless-offline

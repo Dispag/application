@@ -23,7 +23,7 @@
     "supertest": "^6.2.2"
   },
   "scripts": {
-    "start": "npx sls offline start",
+    "start": "cross-env NODE_ENV=dev npx sls offline start --stage dev",
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "resolutions": {
