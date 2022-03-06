@@ -28,8 +28,8 @@ pipeline {
          
           sh '''echo env: ${ACTION}
           	sudo su
-			rm -f -r /home/ec2-user/deployments/*
-          	cd /home/ec2-user/deployments/ && git clone https://github.com/Dispag/application.git
+			      ssh -i /home/ec2-user/access/alexsanderhage.pem ec2-user@${DOCKER_SERVER_IP} 'rm -f -r /home/ec2-user/deployments/*'
+          	ssh -i /home/ec2-user/access/alexsanderhage.pem ec2-user@${DOCKER_SERVER_IP} 'cd /home/ec2-user/deployments/ && git clone https://github.com/Dispag/application.git'
 			
           '''
         
@@ -46,8 +46,7 @@ pipeline {
          
           sh '''echo env: ${ACTION}
           	sudo su
-          	cd /home/ec2-user/deployments/application
-            make build
+          	ssh -i /home/ec2-user/access/alexsanderhage.pem ec2-user@${DOCKER_SERVER_IP} 'cd /home/ec2-user/deployments/application && make build'
           '''
         
       }
@@ -63,8 +62,7 @@ pipeline {
          
           sh '''echo env: ${ACTION}
           	sudo su
-            cd /home/ec2-user/deployments/application
-            make deploy  
+            ssh -i /home/ec2-user/access/alexsanderhage.pem ec2-user@${DOCKER_SERVER_IP} 'cd /home/ec2-user/deployments/application && make deploy'
           '''
         
       }
@@ -80,10 +78,8 @@ pipeline {
          
           sh '''echo env: ${ACTION}
           	sudo su
-          	cd /home/ec2-user/deployments/application
-            make undeploy
+          	ssh -i /home/ec2-user/access/alexsanderhage.pem ec2-user@${DOCKER_SERVER_IP} 'cd /home/ec2-user/deployments/application && make undeploy'
           '''
-        
       }
     }
    
