@@ -50,7 +50,7 @@ provider:
       - subnet-0bd2b902b764ad6b1
       - subnet-07699f487086588cd
   deploymentBucket:
-    name: dispagcode
+    name: dispagdeploy
 
 custom:
   secrete:
