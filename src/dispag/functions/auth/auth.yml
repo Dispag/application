@@ -4,4 +4,4 @@ auth:
       events:
           - http:
               method: post
-              path: auth/login
+              path: /auth/login

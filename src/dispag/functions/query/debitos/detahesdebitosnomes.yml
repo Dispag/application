@@ -4,4 +4,4 @@ query-detalhes-debitos-no-mes:
       events:
           - http:
               method: post
-              path: query/datelhes/debitos/no/mes
+              path: /query/datelhes/debitos/no/mes
