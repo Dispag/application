@@ -4,4 +4,4 @@ query-saldos-debitos-no-mes:
       events:
           - http:
               method: post
-              path: /query/saldos/debitos/no/mes
+              path: query/saldos/debitos/no/mes

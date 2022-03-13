@@ -52,6 +52,23 @@ provider:
   deploymentBucket:
     name: dispagdeploy
 
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+        - "s3:DeleteObject"
+        - iam:Get*
+        - iam:List*
+        - iam:PassRole
+        - iam:CreateRole
+        - iam:DeleteRole
+        - iam:AttachRolePolicy
+        - iam:DeleteRolePolicy
+        - iam:PutRolePolicy
+        - iam:TagRole
+        - iam:UntagRole
+      Resource: "*"
+
 custom:
   secrete:
     dev: '#jequiladispag@$12'
@@ -85,18 +102,6 @@ functions:
    - ${file(./src/dispag/functions/query/debitos/detahesdebitosnomes.yml)}
    - ${file(./src/dispag/functions/query/orcamento/orcamentoanomes.yml)}
 
-
-resources:
-  extensions:
-    IamRoleCustomResourcesLambdaExecution:
-      Properties:
-        PermissionsBoundary: <permission-boundary-policy-arn>
-    IamRoleLambdaExecution:
-      Properties:
-        PermissionsBoundary: <permission-boundary-policy-arn>
-    AppIamRoleLambdaExecution:
-      Properties:
-        PermissionsBoundary: <permission-boundary-policy-arn>
 
 plugins:
       - serverless-offline

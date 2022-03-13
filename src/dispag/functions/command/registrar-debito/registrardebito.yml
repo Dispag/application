@@ -4,4 +4,4 @@ command-novodebito:
       events:
           - http:
               method: post
-              path: /command/registrardebito
+              path: command/registrardebito
