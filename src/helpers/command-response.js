@@ -2,7 +2,7 @@ const {tokenNaoAutorizadoReturn,
     ausenciaHeadersFundamentaisReturn,
     serviceUnavailableReturn,
     acceptedWithThismessageReturn}  = require('./response-code');
-const {PushTopicError, AusenciaHeadersFundamentaisError, TokenExpiradoError} = require('../../libs/erros/exception');
+const {PushTopicError, AusenciaHeadersFundamentaisError, TokenExpiradoError} = require('../exceptions/exception');
 
 const commandReponseException = params => {
 

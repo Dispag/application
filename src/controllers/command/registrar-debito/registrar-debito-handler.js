@@ -1,4 +1,4 @@
-const {execVerify} = require('../../../../libs/auth/verify-token');
+const {execVerify} = require('../../../../helper/verify-token');
 const commandReponse = require('../../../helpers/command-response');
 const {push}  = require('../../../../libs/resources/event-source');
 

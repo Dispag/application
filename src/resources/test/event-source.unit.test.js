@@ -1,6 +1,7 @@
 
 const faker = require('faker');
-const kafka = require('kafka-node');
+
+jest.mock('kafka-node');
 
 describe('event-source instance', () => {
     
@@ -18,14 +19,12 @@ describe('event-source instance', () => {
                 ...originalEnv,
                 KAFKA_ENABLE: 'OFF',
             };
-            event_source = require('../../../libs/resources/event-source');
+            event_source = require('../event-source');
         });
 
         it('Deve acionar a função de pushOFF', async () => {
-            
             const result = await event_source.push(params);
             expect(result).toEqual(expect.stringContaining('Nenhuma Acao Sera Tomada'));
-            
         });
 
     });
@@ -38,16 +37,12 @@ describe('event-source instance', () => {
                 ...originalEnv,
                 KAFKA_ENABLE: 'ON',
             };
-            event_source = require('../../../libs/resources/event-source');
+            event_source = require('../event-source');
         });
-        
 
         it('Deve acionar a função de pushON', async () => {
-           
-             
             const result = await event_source.push(params);
             expect(result).toEqual(expect.stringContaining(' Finalizado Push kafka-producer'));
-            
         });
 
 

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const {TokenExpiradoError: TokenExpiradoError} = require('../erros/exception');
-const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../erros/exception');
+const {TokenExpiradoError: TokenExpiradoError} = require('../exceptions/exception');
+const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../exceptions/exception');
 
 const validarTokenExpirado = event =>{
   

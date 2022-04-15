@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken') 
 const uuid = require ("uuid");
 const usuarioRepository = require('../../../libs/repositories/usuario-repository');
-const {autenticadoReturn, naoAutenticadoReturn}  = require('../../helpers/response-code');
+const {autenticadoReturn, naoAutenticadoReturn}  = require('../../dispag/helpers/response-code');
 
 
 const getToken = data =>{
