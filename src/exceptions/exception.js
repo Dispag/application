@@ -1,17 +1,16 @@
 
-const NOVODEBITOERROR = "ERROR =>> Kafka Producer Novo Debito"
-const EXCLUIRDEBITOERROR = "Kafka Producer Excluir Debito onError"
-const PAGARDEBITOERROR = "Kafka Producer Pagar Debito onError"
-const PUSHTOPICERROR = "Error ao push Topic"
-const AUSENCIAHEADERSFUNDAMENTAISERROR = "Ausencia de Headers Fundamentais"
-const TOKENEXPIRADOERROR = "Token expirado error"
-const PUSHTOPICKAFKAERROR = "Push topic Kafak error"
-const NAOEUTENTICARERROR = "Error ao Autenticar"
+const NOVODEBITOERROR = "ERROR =>> Kafka Producer Novo Debito";
+const EXCLUIRDEBITOERROR = "Kafka Producer Excluir Debito onError";
+const PAGARDEBITOERROR = "Kafka Producer Pagar Debito onError";
+const PUSHTOPICERROR = "Error ao push Topic";
+const AUSENCIAHEADERSFUNDAMENTAISERROR = "Ausencia de Headers Fundamentais";
+const AUSENCIADADOSERROR = "Ausencia Dados Fundamentais";
+const TOKENEXPIRADOERROR = "Token expirado error";
+const PUSHTOPICKAFKAERROR = "Push topic Kafak error";
+const NAOEUTENTICARERROR = "Error ao Autenticar";
 
 function printError(obj){
-  console.error(obj.name)
-  console.error(obj.message)
-  console.error(obj.stack)
+  console.error(obj);
 }
 
 class NovoDebitoError extends Error {
@@ -59,6 +58,15 @@ class AusenciaHeadersFundamentaisError extends Error {
   }
 }
 
+class AusenciaDadosError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = AUSENCIADADOSERROR
+    Object.setPrototypeOf(this, AusenciaDadosError.prototype)
+    printError(this)
+  }
+}
+
 class TokenExpiradoError extends Error {
   constructor(message) {
     super(message)
@@ -72,6 +80,7 @@ module.exports = {
   NovoDebitoError,
   ExcluirDebitoError,
   PagarDebitoError,
+  AusenciaDadosError,
   PushTopicError,
   AusenciaHeadersFundamentaisError,
   TokenExpiradoError,

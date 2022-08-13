@@ -1,7 +1,7 @@
 
 const faker = require('faker');
-const { data_source_pool } = require('../../../libs/resources/data-source');
-const usuarioRepository = require('../../../libs/repositories/usuario-repository');
+const { data_source_pool } = require('../../resources/data-source');
+const usuarioRepository = require('../usuario-repository');
 
 jest.mock('../../../libs/resources/data-source', () => {
     const data_source_pool = {

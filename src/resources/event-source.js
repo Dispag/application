@@ -24,16 +24,11 @@ const producerReturnSent = (err, data)=>{
 }
 
 //Constroi a mensagem que será publicada no tópico kafka
-const buildingMessageToTopic = params=>{
-
-  console.log(`[EVENT-SOURCE] Building Message para Topic-> ${params.topic}`);
-  console.log(`[EVENT-SOURCE] Building Message para body-> ${params.body}`);
-  return  [{ 
-    topic: params.topic, 
-    messages: params.body,
-    partition: 0 
-  }];
-}
+const buildingMessageToTopic = params => ({ 
+  topic: params.topic, 
+  messages: params.body,
+  partition: 0 
+});
 
 //funcao acionada qdo a conexão com o kafka esta On
 const pushON= async params =>{
@@ -57,8 +52,15 @@ const pushON= async params =>{
   }
 }
 
+const push = async  params => {
+
+  console.log('EXECUTOU AQUI.............................................')
+  if (process.env.KAFKA_ENABLE === 'OFF')
+    pushOFF(params);
+  await pushON(params);
+}
 
 module.exports = {
 
-  push :  process.env.KAFKA_ENABLE === 'OFF'?pushOFF:pushON
+  push
 }

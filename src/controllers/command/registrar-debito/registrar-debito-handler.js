@@ -1,7 +1,6 @@
-const {execVerify} = require('../../../../helper/verify-token');
-const commandReponse = require('../../../helpers/command-response');
-const {push}  = require('../../../../libs/resources/event-source');
 
+const commandReponse = require('../../../helpers/command-response');
+const usecase =  require('../../../usecase/registrar-debito-usecase');
 
 
 //[Lambda AWS] Método para atender o Contexto Command Registrar Debito 
@@ -9,10 +8,8 @@ module.exports.registrarDebito = async event =>{
   
   console.log('[REGISTRARDEBITO-HANDLER] Iniciar Registrar Debito');
   try{
-    execVerify(event);
-    await  push({topic:process.env.KAFKATOPIC_REGISTRARDEBITO, body:event.body}); 
-    console.log('[REGISTRARDEBITO-HANDLER] Finalizar Registrar Debito...');
-    return commandReponse.commandReponse();
+
+    usecase.execute(event);
   }catch (exception) {
     
     console.error('[REGISTRARDEBITO-HANDLER] Lançado Error em Registrar Debito...', exception);

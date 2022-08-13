@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const {TokenExpiradoError: TokenExpiradoError} = require('../exceptions/exception');
-const {AusenciaHeadersFundamentaisError: AusenciaHeadersFundamentaisError} = require('../exceptions/exception');
+const { TokenExpiradoError } = require('../exceptions/exception');
+const { AusenciaHeadersFundamentaisError } = require('../exceptions/exception');
 
 const validarTokenExpirado = event =>{
   
@@ -18,8 +18,7 @@ const validarTokenExpirado = event =>{
   
 const existHeadertkuuid = event =>{
     
-  console.log(`[VERIFY-TOKEN] Iniciar Exist header token e uuid ${event.headers.uuid}`);
-  if(!event.headers.token && !event.headers.uuid){
+  if(!event.headers || !event.headers.token || !event.headers.uuid){
     console.error('[VERIFY-TOKEN] Ausencia dos headers uuid e token'); 
     throw new AusenciaHeadersFundamentaisError("Ausencia dos headers uuid e token");
   }
@@ -29,8 +28,8 @@ const existHeadertkuuid = event =>{
 const execVerify = event => {
 
   console.log('[VERIFY-TOKEN] Iniciar Verificacao do Token');
-  validarTokenExpirado(event);
   existHeadertkuuid(event);
+  validarTokenExpirado(event);
   console.log('[VERIFY-TOKEN] Finalizar Verificacao do Token');
 }
 
