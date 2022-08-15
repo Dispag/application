@@ -1,25 +1,29 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": true,
-      "forceConsistentCasingInFileNames": true,
-      "noEmit": false,
-      "esModuleInterop": true,
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "jsx": "preserve",
-      "incremental": true,
-      "baseUrl": ".",
-      "outDir": "./dist",
-      "paths": {
-        "@/automation-test/*": ["automation-test/*"]
-      }
+  
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2020",
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "types": [ "jest", "node"],
+    "typeRoots": ["./types", "./node_modules/@types"]
     },
-    "include": ["**/*.ts", "**/*.tsx", "**/*.jsx"],
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@resources/*": ["./src/resources/*"],
+      
+    },
+
+    "include": ["src/**/*.ts",  "serverless.ts"],
     "exclude": ["node_modules"]
   }
