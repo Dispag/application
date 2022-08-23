@@ -1,8 +1,9 @@
 import * as faker from 'faker';
+import { ResponseCode } from '../../domain/event-source';
 import { EventSourceImpl } from '../event-source-impl';
  
-const f = jest.mock('kafka-node');
 
+jest.mock('kafka-node');
 
 
 describe('EventSourceImpl', () => {
@@ -17,20 +18,24 @@ describe('EventSourceImpl', () => {
    
     describe('Quando ', () => {
 
-        beforeEach(() => {
+        beforeEach(async () => {
             jest.resetModules();
+
             process.env = {
                 ...originalEnv,
                 KAFKA_ENABLE: 'ON',
+                KAFKA_SERVER: faker.lorem.word()
             };
             eventSourceImpl = new EventSourceImpl();
         });
 
-        it('Deve acionar a função de pushON', async () => {
-            await eventSourceImpl.push(params);
-            //expect(result).toEqual(expect.stringContaining(' Finalizado Push kafka-producer'));
-        });
+        describe('when the loadBadgesMetricsByMinimumPercentage is call', () => {
 
+            it('Deve acionar a função de pushON', async () => {
+                const response = await eventSourceImpl.push(params);
+                expect(response.responseCode).toEqual( ResponseCode.OK);
+            });
+        });
 
     });
 });

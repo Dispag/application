@@ -1,6 +1,8 @@
+import { injectable } from "inversify";
+import "reflect-metadata";
 import { KafkaClient, Producer, ProduceRequest } from "kafka-node";
+import { EventSourceParams, EventSource, EventSourceResponse, ResponseCode } from "../domain/event-source";
 
-import { EventSourceParams, EventSource } from "src/domain/event-source";
 
 const OFF = process.env.KAFKA_ENABLE === 'OFF';
 const kafkaHost =  process.env.KAFKA_SERVER || '';
@@ -17,6 +19,7 @@ const producerReturnSent = (err: any, data: string)=>{
   
   }
 
+@injectable()
 export class EventSourceImpl implements EventSource {
 
     private message!: ProduceRequest;
@@ -28,20 +31,27 @@ export class EventSourceImpl implements EventSource {
         this.kafka = new KafkaClient({kafkaHost});
     }
 
-    private async pushOFF (): Promise<void> {
+    private async pushOFF (): Promise<EventSourceResponse> {
 
         const msg  = `[EVENT-SOURCE] -> ${this.message.topic}] [Kafka Off]: Nenhuma Acao Sera Tomada`;
-        console.log(msg);
+        return {
+            responseCode: ResponseCode.OK,
+            message: msg
+         } as EventSourceResponse;
     }
     
-    private async pushON (): Promise<void> {
+    private async pushON (): Promise<EventSourceResponse> {
     
         const producer = await new Producer(this.kafka);
         producer.on('ready', async () => {await producer.send([this.message], producerReturnSent)});
-        console.log(`[EVENT-SOURCE] Finalizado Push kafka-producer Topic-> ${this.message.messages}`)
+        const msg  = `[EVENT-SOURCE] Finalizado Push kafka-producer Topic-> ${this.message.messages}`;
+        return {
+            responseCode: ResponseCode.OK,
+            message: msg
+         } as EventSourceResponse;
     }
     
-    async push (params: EventSourceParams): Promise<void>{
+    async push (params: EventSourceParams): Promise<EventSourceResponse>{
 
         this.message = {
             topic: params.topics, 
@@ -49,9 +59,9 @@ export class EventSourceImpl implements EventSource {
             partition: PARTITION
         }
         if (OFF)
-            this.pushOFF();
+            return await this.pushOFF();
         else
-            await this.pushON();
+            return await this.pushON();
     }
 
 }
