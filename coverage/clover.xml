@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1661293315011" clover="3.2.0">
-  <project timestamp="1661293315011" name="All files">
-    <metrics statements="26" coveredstatements="20" conditionals="8" coveredconditionals="5" methods="7" coveredmethods="4" elements="41" coveredelements="29" complexity="0" loc="26" ncloc="26" packages="2" files="2" classes="2"/>
+<coverage generated="1661544647722" clover="3.2.0">
+  <project timestamp="1661544647722" name="All files">
+    <metrics statements="47" coveredstatements="37" conditionals="10" coveredconditionals="7" methods="16" coveredmethods="9" elements="73" coveredelements="53" complexity="0" loc="47" ncloc="47" packages="3" files="4" classes="4"/>
     <package name="domain">
-      <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <file name="application-response.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\domain\application-response.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="11" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+      </file>
       <file name="event-source.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\domain\event-source.ts">
         <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="9" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="helpers">
+      <metrics statements="10" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="4"/>
+      <file name="application-response-impl.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\helpers\application-response-impl.ts">
+        <metrics statements="10" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="4"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
       </file>
     </package>
     <package name="resources">

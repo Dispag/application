@@ -1,4 +1,3 @@
-
 const NOVODEBITOERROR = "ERROR =>> Kafka Producer Novo Debito";
 const EXCLUIRDEBITOERROR = "Kafka Producer Excluir Debito onError";
 const PAGARDEBITOERROR = "Kafka Producer Pagar Debito onError";
@@ -6,83 +5,68 @@ const PUSHTOPICERROR = "Error ao push Topic";
 const AUSENCIAHEADERSFUNDAMENTAISERROR = "Ausencia de Headers Fundamentais";
 const AUSENCIADADOSERROR = "Ausencia Dados Fundamentais";
 const TOKENEXPIRADOERROR = "Token expirado error";
-const PUSHTOPICKAFKAERROR = "Push topic Kafak error";
-const NAOEUTENTICARERROR = "Error ao Autenticar";
 
-function printError(obj){
-  console.error(obj);
-}
 
-class NovoDebitoError extends Error {
+export class NovoDebitoError extends Error {
     constructor(message) {
       super(message)
       this.name = NOVODEBITOERROR
       Object.setPrototypeOf(this, NovoDebitoError.prototype)
-      printError(this)
+      console.error(this)
     }
 }
 
-class ExcluirDebitoError extends Error {
+export class ExcluirDebitoError extends Error {
   constructor(message) {
     super(message)
     this.name = EXCLUIRDEBITOERROR
     Object.setPrototypeOf(this, ExcluirDebitoError.prototype)
-    printError(this)
+    console.error(this)
   }
 }
 
-class PagarDebitoError extends Error {
+export class PagarDebitoError extends Error {
   constructor(message) {
     super(message)
     this.name = PAGARDEBITOERROR
     Object.setPrototypeOf(this, PagarDebitoError.prototype)
-    printError(this)
+    console.error(this)
   }
 }
 
-class PushTopicError extends Error {
+export class PushTopicError extends Error {
   constructor(message) {
     super(message)
     this.name = PUSHTOPICERROR
     Object.setPrototypeOf(this, PushTopicError.prototype)
-    printError(this)
+    console.error(this)
   }
 }
 
-class AusenciaHeadersFundamentaisError extends Error {
+export class AusenciaHeadersFundamentaisError extends Error {
   constructor(message) {
     super(message)
     this.name = AUSENCIAHEADERSFUNDAMENTAISERROR
     Object.setPrototypeOf(this, AusenciaHeadersFundamentaisError.prototype)
-    printError(this)
+    console.error(this)
   }
 }
 
-class AusenciaDadosError extends Error {
+export class AusenciaDadosError extends Error {
   constructor(message) {
     super(message)
     this.name = AUSENCIADADOSERROR
     Object.setPrototypeOf(this, AusenciaDadosError.prototype)
-    printError(this)
+    console.error(this)
+
   }
 }
 
-class TokenExpiradoError extends Error {
+export class TokenExpiradoError extends Error {
   constructor(message) {
     super(message)
     this.name = TOKENEXPIRADOERROR
     Object.setPrototypeOf(this, TokenExpiradoError.prototype)
-    printError(this)
+    console.error(this)
   }
 }
-
-module.exports = {
-  NovoDebitoError,
-  ExcluirDebitoError,
-  PagarDebitoError,
-  AusenciaDadosError,
-  PushTopicError,
-  AusenciaHeadersFundamentaisError,
-  TokenExpiradoError,
-}
-
