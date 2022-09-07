@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1662555322305" clover="3.2.0">
-  <project timestamp="1662555322315" name="All files">
-    <metrics statements="107" coveredstatements="85" conditionals="13" coveredconditionals="10" methods="26" coveredmethods="19" elements="146" coveredelements="114" complexity="0" loc="107" ncloc="107" packages="5" files="7" classes="7"/>
+<coverage generated="1662578532692" clover="3.2.0">
+  <project timestamp="1662578532692" name="All files">
+    <metrics statements="119" coveredstatements="97" conditionals="21" coveredconditionals="15" methods="29" coveredmethods="22" elements="169" coveredelements="134" complexity="0" loc="119" ncloc="119" packages="6" files="8" classes="8"/>
     <package name="container">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="types.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\container\types.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
       </file>
     </package>
     <package name="domain">
@@ -114,6 +114,24 @@
         <line num="24" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="26" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="repositories">
+      <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="5" methods="3" coveredmethods="3"/>
+      <file name="debito-repository-impl.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\repositories\debito-repository-impl.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="5" methods="3" coveredmethods="3"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="cond" truecount="1" falsecount="1"/>
       </file>
     </package>
     <package name="resources">
