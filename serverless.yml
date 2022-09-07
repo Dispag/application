@@ -88,6 +88,8 @@ custom:
   kafka_server:
     dev: '172.24.170.10:9092'
     prd: ${ssm:/dispag/kafka/server}
+  serverlessPluginTypescript:
+    tsConfigFileLocation: './tsconfig.build.json'
 
 
 functions:

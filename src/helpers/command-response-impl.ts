@@ -13,17 +13,19 @@ export class CommandResponseImpl implements CommandResponse{
     constructor(@inject(TYPES.ApplicationResponse) private applicationResponse: ApplicationResponse){}
     
     reponseException(params: CommandResponseParams): Response {
-        if (params.exception instanceof TokenExpiradoError) {
+
+        switch ( params.exception?.constructor) {
+            case TokenExpiradoError:
+                return this.applicationResponse.tokenNaoAutorizadoReturn();
+             
+            case AusenciaHeadersFundamentaisError: 
+                return this.applicationResponse.ausenciaHeadersFundamentaisReturn()
         
-            return this.applicationResponse.tokenNaoAutorizadoReturn();
-        }
-        if (params.exception instanceof AusenciaHeadersFundamentaisError){
+           case PushTopicError: 
+                return this.applicationResponse.serviceUnavailableReturn(params.event);
             
-            return this.applicationResponse.ausenciaHeadersFundamentaisReturn();
-        }
-        if (params.exception instanceof PushTopicError){
-            
-            return this.applicationResponse.serviceUnavailableReturn(params.event);
+            default:
+                return this.applicationResponse.internalServerError();
         }
     }
 

@@ -114,5 +114,18 @@ export class ApplicationResponseImpl implements ApplicationResponse {
             ),
         };
     }
+
+    internalServerError(): Response {
+        return {
+            statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+            body: JSON.stringify(
+            {
+                message: 'Falha Abrupta'
+            },
+            null,
+            2
+            ),
+        };
+    }
     
 }

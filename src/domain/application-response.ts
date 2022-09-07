@@ -35,4 +35,5 @@ export interface ApplicationResponse {
     ausenciaHeadersFundamentaisReturn(): Response;
     autenticadoReturn(params: any): Response;
     naoAutenticadoReturn(): Response;
+    internalServerError(): Response;
 }
