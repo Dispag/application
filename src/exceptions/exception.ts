@@ -12,7 +12,7 @@ export class NovoDebitoError extends Error {
       super(message)
       this.name = NOVODEBITOERROR
       Object.setPrototypeOf(this, NovoDebitoError.prototype)
-      console.error(this)
+      console.dir(this)
     }
 }
 
@@ -21,7 +21,7 @@ export class ExcluirDebitoError extends Error {
     super(message)
     this.name = EXCLUIRDEBITOERROR
     Object.setPrototypeOf(this, ExcluirDebitoError.prototype)
-    console.error(this)
+    console.dir(this)
   }
 }
 
@@ -30,7 +30,7 @@ export class PagarDebitoError extends Error {
     super(message)
     this.name = PAGARDEBITOERROR
     Object.setPrototypeOf(this, PagarDebitoError.prototype)
-    console.error(this)
+    console.dir(this)
   }
 }
 
@@ -39,7 +39,7 @@ export class PushTopicError extends Error {
     super(message)
     this.name = PUSHTOPICERROR
     Object.setPrototypeOf(this, PushTopicError.prototype)
-    console.error(this)
+    console.dir(this)
   }
 }
 
@@ -48,7 +48,7 @@ export class AusenciaHeadersFundamentaisError extends Error {
     super(message)
     this.name = AUSENCIAHEADERSFUNDAMENTAISERROR
     Object.setPrototypeOf(this, AusenciaHeadersFundamentaisError.prototype)
-    console.error(this)
+    console.dir(this)
   }
 }
 
@@ -57,7 +57,7 @@ export class AusenciaDadosError extends Error {
     super(message)
     this.name = AUSENCIADADOSERROR
     Object.setPrototypeOf(this, AusenciaDadosError.prototype)
-    console.error(this)
+    console.dir(this)
 
   }
 }
@@ -67,6 +67,6 @@ export class TokenExpiradoError extends Error {
     super(message)
     this.name = TOKENEXPIRADOERROR
     Object.setPrototypeOf(this, TokenExpiradoError.prototype)
-    console.error(this)
+    console.dir(this)
   }
 }

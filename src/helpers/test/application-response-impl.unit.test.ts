@@ -2,7 +2,7 @@ import * as faker from 'faker';
 import { StatusCode } from '../../domain/application-response';
 import { ApplicationResponseImpl } from "../application-response-impl";
 
-describe.only('ApplicationResponseImpl', () => {
+describe('ApplicationResponseImpl', () => {
 
     let applicationResponseImpl;
 

@@ -1,6 +1,8 @@
+import { injectable } from "inversify";
+import "reflect-metadata";
 import { ApplicationResponse, Response, StatusCode } from "../domain/application-response";
 
-
+@injectable()
 export class ApplicationResponseImpl implements ApplicationResponse {
    
     successDefault(params: any): Response {
