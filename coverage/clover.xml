@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1662578532692" clover="3.2.0">
-  <project timestamp="1662578532692" name="All files">
-    <metrics statements="119" coveredstatements="97" conditionals="21" coveredconditionals="15" methods="29" coveredmethods="22" elements="169" coveredelements="134" complexity="0" loc="119" ncloc="119" packages="6" files="8" classes="8"/>
+<coverage generated="1662579605891" clover="3.2.0">
+  <project timestamp="1662579605891" name="All files">
+    <metrics statements="128" coveredstatements="106" conditionals="27" coveredconditionals="19" methods="31" coveredmethods="24" elements="186" coveredelements="149" complexity="0" loc="128" ncloc="128" packages="6" files="9" classes="9"/>
     <package name="container">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="types.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\container\types.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="3" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
       </file>
     </package>
     <package name="domain">
@@ -117,7 +117,7 @@
       </file>
     </package>
     <package name="repositories">
-      <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="5" methods="3" coveredmethods="3"/>
+      <metrics statements="21" coveredstatements="21" conditionals="14" coveredconditionals="9" methods="5" coveredmethods="5"/>
       <file name="debito-repository-impl.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\repositories\debito-repository-impl.ts">
         <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="5" methods="3" coveredmethods="3"/>
         <line num="1" count="2" type="stmt"/>
@@ -132,6 +132,18 @@
         <line num="51" count="1" type="stmt"/>
         <line num="61" count="1" type="stmt"/>
         <line num="62" count="1" type="cond" truecount="1" falsecount="1"/>
+      </file>
+      <file name="orcamento-repository-impl.ts" path="C:\Users\hagem\Documents\Desenvolvimento\dispag\application\src\repositories\orcamento-repository-impl.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="cond" truecount="1" falsecount="1"/>
       </file>
     </package>
     <package name="resources">
