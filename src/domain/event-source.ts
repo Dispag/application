@@ -25,3 +25,5 @@ export interface EventSource {
     push (params: EventSourceParams): Promise<EventSourceResponse>;
 
 }
+
+export const EventSource = Symbol("EventSource");

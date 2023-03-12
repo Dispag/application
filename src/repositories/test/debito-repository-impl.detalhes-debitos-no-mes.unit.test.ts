@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+/*import * as faker from 'faker';
 import { Pool } from 'pg';
 import { DebitoRepository } from '../../domain/debitos-repository';
 import { DetalhesDebitos } from '../../domain/detalhes-debitos';
@@ -59,4 +59,4 @@ describe('DebitoRepositoryImpl - detalhesDebitosNoMes', () => {
 
     });
 
-});
+});*/

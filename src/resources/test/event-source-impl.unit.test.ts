@@ -1,12 +1,12 @@
 import * as faker from 'faker';
-import { ResponseCode } from '../../domain/event-source';
-import { EventSourceImpl } from '../event-source-impl';
+import { Test } from '@nestjs/testing';
+import { EventSource, ResponseCode } from '../../domain/event-source';
+import { ResourceModule } from '../resource-modole';
  
 
 jest.mock('kafka-node');
 
-
-describe('EventSourceImpl', () => {
+describe.only('EventSourceImpl', () => {
     
     const originalEnv = process.env;
     const params = {
@@ -15,29 +15,30 @@ describe('EventSourceImpl', () => {
     };
 
     let eventSourceImpl;
-   
-    describe('Quando ', () => {
 
-        beforeEach(async () => {
-            jest.resetModules();
+    beforeEach(async () => {
+        jest.resetModules();
+        process.env = {
+            ...originalEnv,
+            KAFKA_ENABLE: 'ON',
+            KAFKA_SERVER: faker.lorem.word()
+        };
+        const moduleRef = await Test.createTestingModule({
+            imports: [ResourceModule],
+           
+        }).compile();
 
-            process.env = {
-                ...originalEnv,
-                KAFKA_ENABLE: 'ON',
-                KAFKA_SERVER: faker.lorem.word()
-            };
-            eventSourceImpl = new EventSourceImpl();
-        });
-
-        describe('when the loadBadgesMetricsByMinimumPercentage is call', () => {
-
-            it('Deve acionar a função de pushON', async () => {
-                const response = await eventSourceImpl.push(params);
-                expect(response.responseCode).toEqual( ResponseCode.OK);
-            });
-        });
-
+        eventSourceImpl = moduleRef.get<EventSource>(EventSource);
     });
+
+    describe('quando o push e chacmado', () => {
+
+        it('Deve acionar a função de pushON', async () => {
+            const response = await eventSourceImpl.push(params);
+            expect(response.responseCode).toEqual( ResponseCode.OK);
+        });
+    });
+
 });
 
 

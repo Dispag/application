@@ -1,11 +1,10 @@
-import { injectable } from "inversify";
 import "reflect-metadata";
+import { Inject, Injectable } from "@nestjs/common";
 import { KafkaClient, Producer, ProduceRequest } from "kafka-node";
 import { EventSourceParams, EventSource, EventSourceResponse, ResponseCode } from "../domain/event-source";
 
-
 const OFF = process.env.KAFKA_ENABLE === 'OFF';
-const kafkaHost =  process.env.KAFKA_SERVER || '';
+
 const PARTITION = 0;
 
 const producerReturnSent = (err: any, data: string)=>{
@@ -19,17 +18,12 @@ const producerReturnSent = (err: any, data: string)=>{
   
   }
 
-@injectable()
+@Injectable()
 export class EventSourceImpl implements EventSource {
 
     private message!: ProduceRequest;
 
-    private kafka: KafkaClient;
-
-    constructor(){
-
-        this.kafka = new KafkaClient({kafkaHost});
-    }
+    constructor( @Inject('KafkaClient') private kafka: KafkaClient){}
 
     private async pushOFF (): Promise<EventSourceResponse> {
 
@@ -65,3 +59,4 @@ export class EventSourceImpl implements EventSource {
     }
 
 }
+

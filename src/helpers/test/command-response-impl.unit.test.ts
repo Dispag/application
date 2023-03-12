@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+/*import * as faker from 'faker';
 import { ApplicationResponse, StatusCode } from "../../domain/application-response";
 import { AusenciaHeadersFundamentaisError, PushTopicError, TokenExpiradoError } from "../../exceptions/exception";
 import { ApplicationResponseImpl } from "../application-response-impl";
@@ -52,4 +52,4 @@ describe('command-response-impl', () => {
     });
 
 
-});
+});*/

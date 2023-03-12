@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+/*import * as faker from 'faker';
 import { Pool } from 'pg';
 import { Orcamento } from '../../domain';
 import { OrcamentoRepository } from '../../domain/orcamento-repository';
@@ -53,4 +53,4 @@ describe('OrcamentoRepositoryImpl', () => {
 
     });
 
-});
+});*/

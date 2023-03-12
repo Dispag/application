@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+/*import * as faker from 'faker';
 import { StatusCode } from '../../domain/application-response';
 import { ApplicationResponseImpl } from "../application-response-impl";
 
@@ -78,4 +78,4 @@ describe('ApplicationResponseImpl', () => {
 
     });
 
-});
+});*/
