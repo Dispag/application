@@ -7,3 +7,5 @@ export interface AuthenticateParams {
 export interface UsuarioRepository {
     authenticate(params: AuthenticateParams): Promise<Boolean>;
 }
+
+export const UsuarioRepository = Symbol("UsuarioRepository");

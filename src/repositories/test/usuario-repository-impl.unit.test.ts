@@ -1,21 +1,21 @@
 import { faker } from '@faker-js/faker';
+import { Test } from '@nestjs/testing';
 import { Pool } from 'pg';
 import { Usuario } from '../../domain';
 import { UsuarioRepository } from '../../domain/usuario-repository';
-import { UsuarioRepositoryImpl } from '../usuario-repository-impl';
+import { RepositoriesModule } from '../repositories-module';
+
+const resultadoEsperado = {
+    use_id: faker.datatype.number(),
+    nome: faker.internet.userName(),
+} as Usuario;
+
+const resultSet = {
+    rowCount: 1, 
+    rows: [resultadoEsperado],
+} ;
 
 jest.mock('pg', () => {
-    
-    const resultadoEsperado = {
-        use_id: faker.datatype.number(),
-        nome: faker.internet.userName(),
-    } as Usuario;
-
-    const resultSet = {
-        rowCount: 1, 
-        rows: [resultadoEsperado],
-    } ;
-    
     return {
         Pool: jest.fn().mockImplementation(() => ({query: jest.fn().mockReturnValue(resultSet)})),
     };
@@ -26,16 +26,25 @@ describe('UsuarioRepositoryImpl', () => {
 
     let pool: Pool;
     let usuarioRepository: UsuarioRepository;
+    const originalEnv = process.env;
 
     beforeAll(async () => {
-        pool = new Pool({
-            user: faker.internet.userName(),
-            host: faker.internet.domainName(),
-            database: faker.internet.url(),
-            password: faker.internet.password(),
-            port: faker.internet.port(),
-        });
-        usuarioRepository = new UsuarioRepositoryImpl(pool);
+        jest.resetModules();
+
+        process.env = {
+            ...originalEnv,
+            DB_USER: faker.internet.userName(),
+            DB_HOST: faker.internet.domainName(),
+            DB_NAME: faker.internet.url(),
+            DB_PASSWORD: faker.internet.password(),
+            DB_PORT: faker.internet.port().toString(),
+        };
+        const moduleRef = await Test.createTestingModule({
+            imports: [RepositoriesModule ],
+           
+        }).compile();
+        usuarioRepository = moduleRef.get<UsuarioRepository>(UsuarioRepository);
+        pool = moduleRef.get<Pool>('Pool');
     });
 
     describe('Quando os parametros passados estao corretos', () => {

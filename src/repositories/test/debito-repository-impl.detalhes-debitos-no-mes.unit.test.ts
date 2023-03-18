@@ -1,25 +1,22 @@
-/*import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
+import { Test } from '@nestjs/testing';
 import { Pool } from 'pg';
-import { DebitoRepository } from '../../domain/debitos-repository';
-import { DetalhesDebitos } from '../../domain/detalhes-debitos';
-import { DebitoRepositoryImpl } from '../debito-repository-impl';
+import { DebitoRepository, DetalhesDebitos } from '../../domain/index';
+import { RepositoriesModule } from '../repositories-module';
+
+const resultadoEsperado = {
+    vencimento: faker.date.future().toString(),
+    marcacao: faker.datatype.string(),
+    valor: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
+    situacao: 'PAGO'
+} as  DetalhesDebitos;
+
+const resultSet = {
+    rowCount: 1, 
+    rows: [resultadoEsperado],
+} ;
 
 jest.mock('pg', () => {
-    
-    const resultadoEsperado = {
-
-        vencimento: faker.date.future().toString,
-        marcacao: faker.datatype.string(),
-        valor: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
-        situacao: 'PAGO'
-
-       
-    }as DetalhesDebitos;
-    const resultSet = {
-        rowCount: 1, 
-        rows: [resultadoEsperado],
-    } ;
-    
     return {
         Pool: jest.fn().mockImplementation(() => ({query: jest.fn().mockReturnValue(resultSet)})),
     };
@@ -30,16 +27,27 @@ describe('DebitoRepositoryImpl - detalhesDebitosNoMes', () => {
 
     let pool: Pool;
     let debitoRepository: DebitoRepository;
+    const originalEnv = process.env;
 
     beforeAll(async () => {
-        pool = new Pool({
-            user: faker.internet.userName(),
-            host: faker.internet.domainName(),
-            database: faker.internet.url(),
-            password: faker.internet.password(),
-            port: faker.internet.port(),
-        });
-        debitoRepository = new DebitoRepositoryImpl(pool);
+        jest.resetModules();
+
+        process.env = {
+            ...originalEnv,
+            DB_USER: faker.internet.userName(),
+            DB_HOST: faker.internet.domainName(),
+            DB_NAME: faker.internet.url(),
+            DB_PASSWORD: faker.internet.password(),
+            DB_PORT: faker.internet.port().toString(),
+        };
+
+        const moduleRef = await Test.createTestingModule({
+            imports: [RepositoriesModule ],
+           
+        }).compile();
+
+        debitoRepository = moduleRef.get<DebitoRepository>(DebitoRepository);
+        pool = moduleRef.get<Pool>('Pool');
     });
 
     describe('Quando os parametros passados estao corretos', () => {
@@ -59,4 +67,4 @@ describe('DebitoRepositoryImpl - detalhesDebitosNoMes', () => {
 
     });
 
-});*/
+});

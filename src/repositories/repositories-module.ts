@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
 import { Pool } from 'pg';
-import { DebitoRepository, OrcamentoRepository } from '../domain/index';
+import { DebitoRepository, OrcamentoRepository, UsuarioRepository } from '../domain/index';
 import { DebitoRepositoryImpl } from './debito-repository-impl';
 import { OrcamentoRepositoryImpl } from "./orcamento-repository-impl";
+import { UsuarioRepositoryImpl } from "./usuario-repository-impl";
 
 const user =  process.env.DB_USER || '';
 const host = process.env.DB_HOST || '';
@@ -32,6 +33,10 @@ const dataSourceFactory = {
       {
         provide: OrcamentoRepository, 
         useClass: OrcamentoRepositoryImpl
+      },
+      {
+        provide: UsuarioRepository, 
+        useClass: UsuarioRepositoryImpl
       },
     ],
 })
