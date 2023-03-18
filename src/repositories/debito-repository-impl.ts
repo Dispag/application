@@ -1,15 +1,16 @@
 import { Pool } from 'pg';
-import { inject, injectable } from "inversify";
+import { Injectable, Inject } from '@nestjs/common';
 import "reflect-metadata";
-import TYPES from "../container/types";
-import { DebitoRepository, DetalhesDebitosNoMesParams, SadosDebitosParams } from "../domain/debitos-repository";
-import { SadosDebitos } from "../domain/sados-debitos";
-import { DetalhesDebitos } from '../domain/detalhes-debitos';
+import { DebitoRepository, 
+    DetalhesDebitosNoMesParams, 
+    SadosDebitosParams, 
+    SadosDebitos,
+    DetalhesDebitos } from "../domain/index";
 
-@injectable()
+@Injectable()
 export class DebitoRepositoryImpl implements DebitoRepository {
     
-    constructor (@inject(TYPES.DataSourcePool) private dataSourcePool: Pool){
+    constructor (@Inject('Pool') private readonly pool: Pool){
 
     }
     
@@ -43,9 +44,12 @@ export class DebitoRepositoryImpl implements DebitoRepository {
             and d.orc_id = o.orc_id
         ), 0) as total
         FROM tb_orcamento o WHERE o.ano = '${params.ano}' and o.mes = '${params.mes}'`;
-        const result = await this.dataSourcePool.query(QUERY);
-        return result.rowCount>0? result.rows: '[]';
+        const result = await this.pool.query(QUERY);
+        return result.rows as SadosDebitos;
     }
+
+
+
 
     async detalhesDebitosNoMes(params: DetalhesDebitosNoMesParams): Promise<DetalhesDebitos> {
        const QUERY = `select 
@@ -58,8 +62,8 @@ export class DebitoRepositoryImpl implements DebitoRepository {
                         join tb_orcamento o using (orc_id) 
                     where  c.tipo = '${params.tipo}' and o.ano = '${params.ano}' and o.mes = '${params.mes}'
                     order by d.vencimento`;
-        const result = await this.dataSourcePool.query(QUERY);
-        return result.rowCount>0? result.rows: '[]';
+        const result = await this.pool.query(QUERY);
+        return result.rows as DetalhesDebitos;
 
     }
     

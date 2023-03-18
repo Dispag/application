@@ -1,6 +1,6 @@
 export interface DetalhesDebitos{
-    vencimento: string;
-    marcacao: string;
-    valor: number;
-    situacao: string;
+    vencimento?: string;
+    marcacao?: string;
+    valor?: number;
+    situacao?: string;
 }

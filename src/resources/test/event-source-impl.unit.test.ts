@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { Test } from '@nestjs/testing';
 import { EventSource, ResponseCode } from '../../domain/event-source';
 import { ResourceModule } from '../resource-modole';
@@ -6,7 +6,7 @@ import { ResourceModule } from '../resource-modole';
 
 jest.mock('kafka-node');
 
-describe.only('EventSourceImpl', () => {
+describe('EventSourceImpl', () => {
     
     const originalEnv = process.env;
     const params = {

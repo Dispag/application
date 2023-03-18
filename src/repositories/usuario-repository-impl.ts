@@ -1,6 +1,6 @@
+import { Inject } from '@nestjs/common';
 import { Pool } from 'pg';
-import { inject } from "inversify";
-import TYPES from "../container/types";
+
 import "reflect-metadata";
 import { AuthenticateParams, UsuarioRepository } from "../domain/usuario-repository";
 
@@ -8,7 +8,7 @@ import { AuthenticateParams, UsuarioRepository } from "../domain/usuario-reposit
 
 export class UsuarioRepositoryImpl implements UsuarioRepository {
     
-    constructor (@inject(TYPES.DataSourcePool) private dataSourcePool: Pool){
+    constructor (@Inject() private dataSourcePool: Pool){
 
     }
     

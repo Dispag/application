@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { Pool } from 'pg';
 import { Usuario } from '../../domain';
 import { UsuarioRepository } from '../../domain/usuario-repository';

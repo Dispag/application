@@ -1,22 +1,25 @@
-import * as faker from 'faker';
 import { Pool } from 'pg';
-import { DebitoRepository } from '../../domain/debitos-repository';
-import { SadosDebitos } from '../../domain/sados-debitos';
-import { DebitoRepositoryImpl } from '../debito-repository-impl';
+import { Test } from '@nestjs/testing';
+import { faker } from '@faker-js/faker';
+import { DebitoRepository, SadosDebitos } from '../../domain/index';
+import { RepositoriesModule } from '../repositories-module';
+
+
+
+const resultadoEsperado = {
+    orcamento: '1 2022', 
+    avulsos: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
+    basicos: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
+    recorrentes: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
+    total: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
+}as SadosDebitos;
+const resultSet = {
+    rowCount: 1, 
+    rows: [resultadoEsperado],
+} ;
+
 
 jest.mock('pg', () => {
-    
-    const resultadoEsperado = {
-        orcamento: '1 2022', 
-        avulsos: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
-        basicos: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
-        recorrentes: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
-        total: faker.datatype.number({ min: 1, max: 300, precision: 0.01 }),
-    }as SadosDebitos;
-    const resultSet = {
-        rowCount: 1, 
-        rows: [resultadoEsperado],
-    } ;
     
     return {
         Pool: jest.fn().mockImplementation(() => ({query: jest.fn().mockReturnValue(resultSet)})),
@@ -24,23 +27,35 @@ jest.mock('pg', () => {
   });
 
 
-describe('DebitoRepositoryImpl - saldosDebitosNoMes', () => {
+describe.only('DebitoRepositoryImpl - saldosDebitosNoMes', () => {
 
     let pool: Pool;
     let debitoRepository: DebitoRepository;
+    const originalEnv = process.env;
 
     beforeAll(async () => {
-        pool = new Pool({
-            user: faker.internet.userName(),
-            host: faker.internet.domainName(),
-            database: faker.internet.url(),
-            password: faker.internet.password(),
-            port: faker.internet.port(),
-        });
-        debitoRepository = new DebitoRepositoryImpl(pool);
+        jest.resetModules();
+
+        process.env = {
+            ...originalEnv,
+            DB_USER: faker.internet.userName(),
+            DB_HOST: faker.internet.domainName(),
+            DB_NAME: faker.internet.url(),
+            DB_PASSWORD: faker.internet.password(),
+            DB_PORT: faker.internet.port().toString(),
+        };
+
+        const moduleRef = await Test.createTestingModule({
+            imports: [RepositoriesModule ],
+           
+        }).compile();
+
+        debitoRepository = moduleRef.get<DebitoRepository>(DebitoRepository);
+        pool = moduleRef.get<Pool>('Pool');
     });
 
     describe('Quando os parametros passados estao corretos', () => {
+
 
         it('Deve retorar um rasultado valido para SadosDebitos', async () => {
             const params = {

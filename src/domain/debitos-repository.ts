@@ -16,3 +16,5 @@ export interface DebitoRepository {
     saldosDebitosNoMes(params: SadosDebitosParams): Promise<SadosDebitos>;
     detalhesDebitosNoMes(params: DetalhesDebitosNoMesParams): Promise<DetalhesDebitos>;
 }
+
+export const DebitoRepository = Symbol("DebitoRepository");
