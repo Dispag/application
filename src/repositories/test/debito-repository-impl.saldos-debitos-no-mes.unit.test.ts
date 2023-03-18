@@ -27,7 +27,7 @@ jest.mock('pg', () => {
   });
 
 
-describe.only('DebitoRepositoryImpl - saldosDebitosNoMes', () => {
+describe('DebitoRepositoryImpl - saldosDebitosNoMes', () => {
 
     let pool: Pool;
     let debitoRepository: DebitoRepository;
