@@ -8,3 +8,5 @@ export interface OrcamentoAnoMesParams {
 export interface OrcamentoRepository {
     orcamentoAnoMes(params: OrcamentoAnoMesParams): Promise<Orcamento>;
 }
+
+export const OrcamentoRepository = Symbol("OrcamentoRepository");

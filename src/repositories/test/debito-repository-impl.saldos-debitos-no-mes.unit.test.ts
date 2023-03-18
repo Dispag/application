@@ -18,9 +18,7 @@ const resultSet = {
     rows: [resultadoEsperado],
 } ;
 
-
 jest.mock('pg', () => {
-    
     return {
         Pool: jest.fn().mockImplementation(() => ({query: jest.fn().mockReturnValue(resultSet)})),
     };
