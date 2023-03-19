@@ -11,4 +11,4 @@ export * from './orcamento-repository';
 export * from './sados-debitos';
 export * from './usuario-repository';
 export * from './enums/status-code';
-export * from './http-response';
+export * from '../helpers/http-response';

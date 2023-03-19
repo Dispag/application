@@ -1,5 +1,5 @@
 import { AusenciaHeadersFundamentaisError, PushTopicError, TokenExpiradoError } from "../exceptions";
-import { StatusCode } from "./enums/status-code";
+import { StatusCode } from "../domain/index";
 
 export type Headers = {
     token: string;
