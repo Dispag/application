@@ -1,3 +1,4 @@
+import { AusenciaHeadersFundamentaisError, PushTopicError, TokenExpiradoError } from "../exceptions";
 import { StatusCode } from "./enums/status-code";
 
 export type Headers = {
@@ -10,8 +11,13 @@ export interface Response {
     body: string;
 }
 
-export class HttpResponse {
 
+export interface CommandResponseParams{
+    exception?: Error;
+    event?: any;
+}
+
+export class HttpResponse {
 
     public static successDefault(params: any): Response {
         return {
@@ -135,6 +141,27 @@ export class HttpResponse {
         };
     }
 
+    public static reponseException(params: CommandResponseParams): Response {
 
+        switch ( params.exception?.constructor) {
+            case TokenExpiradoError:
+                return this.tokenNaoAutorizadoReturn();
+             
+            case AusenciaHeadersFundamentaisError: 
+                return this.ausenciaHeadersFundamentaisReturn()
+        
+           case PushTopicError: 
+                return this.serviceUnavailableReturn(params.event);
+            
+            default:
+                return this.internalServerError();
+        }
+    }
+
+
+    public static reponseAccepted(): Response {
+        const COMMAND_RESPONSE = 'Operacao Realizada Com Sucesso, as acoes serão tomadas no decorrer do tempo';
+        return this.acceptedWithThismessageReturn(COMMAND_RESPONSE);
+    }
 
 }
