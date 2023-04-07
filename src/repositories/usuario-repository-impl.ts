@@ -12,8 +12,8 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 
     }
     
-    async authenticate(params: AuthenticateParams): Promise<Boolean> {
-        const QUERY_USUARIO = ` SELECT u.use_id, u.nome FROM tb_usuario u WHERE u.login = '${params.user}' and  u.senha = '${params.passwd}' `;
+    async authenticate(params: AuthenticateParams): Promise<boolean> {
+        const QUERY_USUARIO = ` SELECT u.use_id, u.nome FROM tb_usuario u WHERE u.login = '${params.user}' and  u.senha = '${params.senha}' `;
         const result = await this.pool.query(QUERY_USUARIO);
         return result.rowCount>0;
     }

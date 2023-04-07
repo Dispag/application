@@ -52,7 +52,7 @@ describe('UsuarioRepositoryImpl', () => {
         it('Deve retorar true para usuario autenticado', async () => {
             const params = {
                 user: faker.internet.userName(),
-                passwd: faker.internet.password(),
+                senha: faker.internet.password(),
             }
             const result = await usuarioRepository.authenticate(params);
             expect(pool.query).toBeCalledTimes(1);

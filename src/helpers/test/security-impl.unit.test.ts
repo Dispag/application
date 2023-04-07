@@ -6,10 +6,6 @@ import { HelpersModule } from "../helpers-module";
 
 describe('SecurityImpl', () => {
 
-
-
-
-
     describe('gerarToken', () => {
 
         const originalEnv = process.env;
@@ -41,9 +37,5 @@ describe('SecurityImpl', () => {
             });
         });
     });
-
-
-
-
 
 });

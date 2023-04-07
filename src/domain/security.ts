@@ -1,9 +1,13 @@
-import { LoginParams } from "./authenticator-use-case";
 
 interface Headers {
 
     token: string;
     uuid: string;
+}
+
+export interface LoginParams {
+    user?: string;
+    senha?: string;
 }
 
 export interface SecurityParams{
@@ -13,7 +17,7 @@ export interface SecurityParams{
 
 export interface Security {
 
-    exec(params: SecurityParams):  Promise<Boolean>;
+    exec(params: SecurityParams):  Promise<boolean>;
     gerarToken(params: LoginParams): string;
 }
 

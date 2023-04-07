@@ -1,11 +1,11 @@
 
 export interface AuthenticateParams {
-    user: string;
-    passwd: string;
+    user?: string;
+    senha?: string;
 }
 
 export interface UsuarioRepository {
-    authenticate(params: AuthenticateParams): Promise<Boolean>;
+    authenticate(params: AuthenticateParams): Promise<boolean>;
 }
 
 export const UsuarioRepository = Symbol("UsuarioRepository");
