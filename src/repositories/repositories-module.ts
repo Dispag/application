@@ -39,5 +39,18 @@ const dataSourceFactory = {
         useClass: UsuarioRepositoryImpl
       },
     ],
+
+    exports: [dataSourceFactory,  {
+      provide: DebitoRepository, 
+      useClass: DebitoRepositoryImpl
+    },
+    {
+      provide: OrcamentoRepository, 
+      useClass: OrcamentoRepositoryImpl
+    },
+    {
+      provide: UsuarioRepository, 
+      useClass: UsuarioRepositoryImpl
+    } ]
 })
 export class RepositoriesModule {}

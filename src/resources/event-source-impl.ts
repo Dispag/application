@@ -23,7 +23,7 @@ export class EventSourceImpl implements EventSource {
 
     private message!: ProduceRequest;
 
-    constructor( @Inject('KafkaClient') private kafka: KafkaClient){}
+    constructor( @Inject('KafkaClient') protected kafka: KafkaClient){}
 
     private async pushOFF (): Promise<EventSourceResponse> {
 

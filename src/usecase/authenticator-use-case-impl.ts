@@ -8,8 +8,8 @@ import { Inject, Injectable } from "@nestjs/common";
 export class AuthenticatorUseCaseImpl implements AuthenticatorUseCase{
     
     
-    constructor (@Inject() private readonly usuarioRepository: UsuarioRepository,
-    @Inject() private readonly security: Security){
+    constructor ( @Inject(UsuarioRepository) protected readonly usuarioRepository: UsuarioRepository,
+    @Inject(Security) protected readonly security: Security){
 
     }
     

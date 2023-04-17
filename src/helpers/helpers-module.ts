@@ -10,5 +10,6 @@ import { SecurityImpl } from "./security-impl";
         useClass: SecurityImpl
       }
     ],
+    exports: [Security ]
 })
 export class HelpersModule {}

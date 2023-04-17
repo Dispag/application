@@ -20,6 +20,10 @@ const kafkaClientFactory = {
             useClass: EventSourceImpl
         }
     ],
+    exports: [kafkaClientFactory, {
+        provide: EventSource, 
+        useClass: EventSourceImpl
+    }]
 })
 export class ResourceModule {}
   

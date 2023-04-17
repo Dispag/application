@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
-import { AuthenticatorUseCase } from "src/domain/index";
+import { AuthenticatorUseCase } from "../domain/index";
 import { AuthenticatorUseCaseImpl } from "./authenticator-use-case-impl";
-import { RepositoriesModule } from "src/repositories/repositories-module";
-import { HelpersModule } from "src/helpers/helpers-module";
-
-
+import { RepositoriesModule } from "../repositories/repositories-module";
+import { HelpersModule } from "../helpers/helpers-module";
 
 @Module({
     imports: [ RepositoriesModule, HelpersModule ],
@@ -14,5 +12,9 @@ import { HelpersModule } from "src/helpers/helpers-module";
         useClass: AuthenticatorUseCaseImpl
       },
     ],
+    exports: [{
+      provide: AuthenticatorUseCase, 
+      useClass: AuthenticatorUseCaseImpl
+    }]
 })
 export class UseCaseModule {}

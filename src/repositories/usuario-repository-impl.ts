@@ -8,7 +8,7 @@ import { AuthenticateParams, UsuarioRepository } from "../domain/usuario-reposit
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
     
-    constructor (@Inject('Pool') private readonly pool: Pool){
+    constructor ( @Inject('Pool') protected readonly pool: Pool){
 
     }
     

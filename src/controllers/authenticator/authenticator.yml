@@ -1,6 +1,6 @@
 authenticator:
       name: authenticator
-      handler: src/controllers/authenticator/auth-handler.login
+      handler: src/controllers/authenticator/authenticator-handler.login
       events:
           - http:
               method: post

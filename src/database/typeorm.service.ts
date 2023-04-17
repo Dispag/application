@@ -16,7 +16,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: this.config.get<string>('DB_NAME'),
       username: this.config.get<string>('DB_USER'),
       password: this.config.get<string>('DB_PASSWORD'),
-      entities: ['dist/**/*.entity.{ts,js}'],
+      entities: ['.build/**/*.entity.{ts,js}'],
       logger: 'file',
       synchronize: false, // never use TRUE in production!
     };
