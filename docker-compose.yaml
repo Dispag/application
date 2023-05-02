@@ -1,0 +1,10 @@
+version: '3.5'
+services:
+  application:
+    image: application
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    build:
+      context: .
+      dockerfile: Dockerfile

@@ -26,7 +26,8 @@
     "serverless": "^0.0.1",
     "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.12",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -53,11 +54,12 @@
     "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
-    "build": "npx tsc --build",
+    "compile": "npx tsc --build",
+    "build": "npx nest build",
     "start": "cross-env NODE_ENV=dev npx sls offline start --stage dev",
     "start2": "nest start",
-    "deploy": "cross-env NODE_ENV=prd npx sls deploy --verbose --stage prd --region us-east-2",
-    "undeploy": "cross-env NODE_ENV=prd npx sls remove",
+    "deploy": "npx sls deploy --verbose --stage prd",
+    "undeploy": "npx sls remove --verbose",
     "test": "jest --forceExit --passWithNoTests --detectOpenHandles --runInBand --coverage",
     "lint": "eslint '**/*.{js,ts,tsx}' --max-warnings=122"
   },

@@ -38,6 +38,24 @@ provider:
   deploymentBucket:
     name: dispagdeploy
 
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    shouldStartNameWithService: true
+
+  httpApi:
+    metrics: true 
+    useProviderTags: true
+    authorizers:
+      CustomLambdaAuthorizer:
+        type: request 
+        functionName: authorizer
+        resultTtlInSeconds: 300 
+        enableSimpleResponses: true 
+        payloadVersion: '2.0' #
+        identitySource:
+          - $request.header.Authorization
+        managedExternally: false
+
   iam:
     role:
       statements:
@@ -61,6 +79,7 @@ custom:
   secrete:
     dev: '#jequiladispag@$12'
     prd: ${ssm:/dispag/secrete}
+
   db_user:
     dev: 'programador'
     prd: ${ssm:/dispag/database/username}
@@ -98,9 +117,28 @@ functions:
           - http:
               method: post
               path: auth/login
-  
+
+  authorizer:
+      memorySize: 256
+      timeout: 10
+      handler: .build/handlers/authenticator-handler.authorizer
+
+  registrardebito:
+      memorySize: 256
+      timeout: 10
+      handler: .build/handlers/command-registrar-debito-handler.handler
+      events:
+          - http:
+              method: post
+              path: registrar/debito
+              authorizer: 
+                type: token 
+                name: authorizer
+                resultTtlInSeconds: 300 
+                identitySource: method.request.header.Authorization 
 
 plugins:
       - serverless-offline
       - serverless-dotenv-plugin
      
+

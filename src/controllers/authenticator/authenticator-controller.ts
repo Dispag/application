@@ -1,6 +1,7 @@
 
-import { AuthenticatorUseCase } from '../../domain/index';
 import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { AuthenticatorUseCase } from '../../domain/index';
+import { Response } from "../../helpers/http-response";
 
 
 interface HttpRequest {
@@ -14,10 +15,9 @@ export class AuthenticatorController {
   constructor(@Inject(AuthenticatorUseCase) protected readonly authenticatorUseCase: AuthenticatorUseCase) {}
 
   @Post('login')
-  async login( @Body() params: HttpRequest): Promise<string> {
+  async login( @Body() params: HttpRequest): Promise<Response> {
 
-    const response = JSON.stringify(await this.authenticatorUseCase.login({...params}));
-    return response;
+    return await this.authenticatorUseCase.login({...params});
   }
 
 }
