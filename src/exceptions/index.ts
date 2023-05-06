@@ -4,3 +4,4 @@ export * from './pagar-debito-error';
 export * from './push-topic-error';
 export * from './token-expirado-error';
 export * from './ausencia-headers-fundamentais-error';
+export * from './queue-not-found-error';

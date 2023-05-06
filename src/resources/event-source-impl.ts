@@ -1,61 +1,51 @@
 import "reflect-metadata";
-import { Inject, Injectable } from "@nestjs/common";
-import { KafkaClient, Producer, ProduceRequest } from "kafka-node";
+import { Injectable } from "@nestjs/common";
+import { SQS } from 'aws-sdk';
 import { EventSourceParams, EventSource, EventSourceResponse, ResponseCode } from "../domain/event-source";
+import { QueueNotFoundError } from "../exceptions";
+import { GetQueueUrlResult } from "aws-sdk/clients/sqs";
 
-const OFF = process.env.KAFKA_ENABLE === 'OFF';
 
-const PARTITION = 0;
+const env = process.env.NODE_ENV;
+const isLocal = env === 'development' || env === 'test' || env === 'docker';
 
-const producerReturnSent = (err: any, data: string)=>{
+const localSQSParams = {
+  accessKeyId: process.env.MOCK_ACCESS_KEY,
+  secretAccessKey: process.env.MOCK_KEY_ID,
+  endpoint: process.env.MOCK_SQS_ENDPOINT,
+};
 
-    if (err) {
-      console.error(err)
-    }else {
-  
-      console.log('[kafka-producer -> '+data+']: broker success');
-    }
-  
-  }
+const sqs: SQS = isLocal ? new SQS(localSQSParams) : new SQS();
+
 
 @Injectable()
 export class EventSourceImpl implements EventSource {
 
-    private message!: ProduceRequest;
-
-    constructor( @Inject('KafkaClient') protected kafka: KafkaClient){}
-
-    private async pushOFF (): Promise<EventSourceResponse> {
-
-        const msg  = `[EVENT-SOURCE] -> ${this.message.topic}] [Kafka Off]: Nenhuma Acao Sera Tomada`;
-        return {
-            responseCode: ResponseCode.OK,
-            message: msg
-         } as EventSourceResponse;
+    private async getQueueUrlByName(queueName: string): Promise<string> {
+      try{
+        const queueUrl = await sqs
+          .getQueueUrl({
+            QueueName: queueName,
+          })
+        return (queueUrl as GetQueueUrlResult).QueueUrl as string;
+      }catch(e){
+        throw new QueueNotFoundError(queueName);
+      }
     }
-    
-    private async pushON (): Promise<EventSourceResponse> {
-    
-        const producer = await new Producer(this.kafka);
-        producer.on('ready', async () => {await producer.send([this.message], producerReturnSent)});
-        const msg  = `[EVENT-SOURCE] Finalizado Push kafka-producer Topic-> ${this.message.messages}`;
-        return {
-            responseCode: ResponseCode.OK,
-            message: msg
-         } as EventSourceResponse;
-    }
-    
+
     async push (params: EventSourceParams): Promise<EventSourceResponse>{
+        const queueUrl = await this.getQueueUrlByName(params.queueName);
 
-        this.message = {
-            topic: params.topics, 
-            messages: params.body,
-            partition: PARTITION
-        }
-        if (OFF)
-            return await this.pushOFF();
-        else
-            return await this.pushON();
+        const sendMessageParams = {
+            QueueUrl: queueUrl,
+            MessageBody: JSON.stringify(params.body),
+        };
+        await sqs.sendMessage(sendMessageParams);
+
+        return {
+            responseCode: ResponseCode.OK,
+            message: params.body
+         } as EventSourceResponse;
     }
 
 }

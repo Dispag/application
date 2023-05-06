@@ -13,6 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1373.0",
     "aws-serverless-express": "^3.4.0",
     "body-parser": "^1.19.0",
     "dotenv": "^16.0.0",
@@ -69,44 +70,7 @@
   "author": "Alexsander Melo",
   "license": "ISC",
   "engines": {
-    "npm": ">=8.17.0",
+    "npm": ">=9.6.6",
     "node": ">=16.16.0"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.test.ts?$",
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json",
-      "node"
-    ],
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false,
-        "babelConfig": true
-      }
-    },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/src/database/",
-      "<rootDir>/src/modules/",
-      "<rootDir>/src/test/"
-    ],
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "coverageReporters": [
-      "text"
-    ],
-    "testEnvironment": "node",
-    "setupFiles": [
-      "core-js"
-    ],
-    "globalSetup": "./src/test/jest-suite-setup.ts",
-    "globalTeardown": "./src/test/jest-suite-teardown.ts"
   }
 }

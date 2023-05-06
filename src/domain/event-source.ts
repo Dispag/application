@@ -1,7 +1,7 @@
 
 export interface EventSourceParams {
 
-    topics: string;
+    queueName: string;
 
     body: string;
 }

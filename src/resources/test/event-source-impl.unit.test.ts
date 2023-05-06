@@ -2,15 +2,26 @@ import { faker } from '@faker-js/faker';
 import { Test } from '@nestjs/testing';
 import { EventSource, ResponseCode } from '../../domain/event-source';
 import { ResourceModule } from '../resource-modole';
- 
 
-jest.mock('kafka-node');
+
+jest.mock('aws-sdk', () => {
+    
+    const queueUrl = 'http://0.0.0.0:9324/000000000000/QUEUTESTE';
+    
+    return {
+      SQS: jest.fn().mockImplementation(() => ({
+        getQueueUrl: jest.fn().mockReturnValue( queueUrl) ,  
+        sendMessage:  jest.fn().mockReturnThis() 
+      }))
+    };
+  });
+
 
 describe('EventSourceImpl', () => {
     
     const originalEnv = process.env;
     const params = {
-        topics: faker.lorem.word(),
+        queueName: faker.lorem.word(),
         body: faker.datatype.json(),
     };
 
@@ -20,9 +31,9 @@ describe('EventSourceImpl', () => {
         jest.resetModules();
         process.env = {
             ...originalEnv,
-            KAFKA_ENABLE: 'ON',
-            KAFKA_SERVER: faker.lorem.word()
+        
         };
+
         const moduleRef = await Test.createTestingModule({
             imports: [ResourceModule],
            
@@ -31,9 +42,9 @@ describe('EventSourceImpl', () => {
         eventSourceImpl = moduleRef.get<EventSource>(EventSource);
     });
 
-    describe('quando o push e chacmado', () => {
+    describe('quando o push e chamada com os parametos corretos', () => {
 
-        it('Deve acionar a função de pushON', async () => {
+        it('Deve retorno resposta ok', async () => {
             const response = await eventSourceImpl.push(params);
             expect(response.responseCode).toEqual( ResponseCode.OK);
         });
