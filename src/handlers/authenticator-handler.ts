@@ -10,14 +10,17 @@ import * as awsServerlessExpress from 'aws-serverless-express';
 import { Server } from 'http';
 import * as express from 'express';
 import { AppModule } from '../appModule/app.module';
-import {contextAuth2 } from './IAuthorizerContext'
 
 
 let cachedServer: Server;
 
-interface IResponseAuthSimplePayloadv2 {
+interface contextAuth {
+  userId: string;
+}
+
+interface ResponseAuthSimplePayload {
   isAuthorized: boolean
-  context: contextAuth2
+  context: contextAuth
 }
 
 async function bootstrapServer(): Promise<Server> {
@@ -56,9 +59,9 @@ const generatePolicy = (methodArn) =>({
 
 export const authorizer = async (
   authorizerEvent: APIGatewayTokenAuthorizerEvent,
-): Promise<APIGatewaySimpleAuthorizerWithContextResult<contextAuth2>| APIGatewayAuthorizerResult> => {
+): Promise<APIGatewaySimpleAuthorizerWithContextResult<contextAuth>| APIGatewayAuthorizerResult> => {
 
-  const response : IResponseAuthSimplePayloadv2= {
+  const response : ResponseAuthSimplePayload = {
     isAuthorized: false,
     context: {
       userId: '',

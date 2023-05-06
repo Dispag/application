@@ -42,20 +42,6 @@ provider:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
     shouldStartNameWithService: true
 
-  httpApi:
-    metrics: true 
-    useProviderTags: true
-    authorizers:
-      CustomLambdaAuthorizer:
-        type: request 
-        functionName: authorizer
-        resultTtlInSeconds: 300 
-        enableSimpleResponses: true 
-        payloadVersion: '2.0' #
-        identitySource:
-          - $request.header.Authorization
-        managedExternally: false
-
   iam:
     role:
       statements:
@@ -99,6 +85,18 @@ custom:
   serverlessPluginTypescript:
     tsConfigFileLocation: './tsconfig.build.json'
   
+  #customDomain:
+  #  domainName: dispag.hagemelo.io
+  #  basePath: ''
+  #  stage: ${self:provider.stage}
+  #  endPointType: regional
+  #  certificateArn: arn:aws:acm:us-east-1:644097961727:certificate/c45c5e3e-af04-4615-ac44-ea9b1c60cf55
+  #  createRoute53Record: true
+  #  enabled: true
+  #  autoDomain: true
+  #  apiType: rest
+
+
 package:
   exclude:
     - .git/**
@@ -138,7 +136,8 @@ functions:
                 identitySource: method.request.header.Authorization 
 
 plugins:
-      - serverless-offline
-      - serverless-dotenv-plugin
+  - serverless-domain-manager
+  - serverless-offline
+  #- serverless-dotenv-plugin
      
 
