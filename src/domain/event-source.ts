@@ -2,7 +2,6 @@
 export interface EventSourceParams {
 
     queueName: string;
-
     body: string;
 }
 
@@ -15,7 +14,6 @@ export enum ResponseCode {
 export interface EventSourceResponse {
 
     responseCode: ResponseCode;
-
     message: string;
 }
 
@@ -23,7 +21,6 @@ export interface EventSourceResponse {
 export interface EventSource {
 
     push (params: EventSourceParams): Promise<EventSourceResponse>;
-
 }
 
 export const EventSource = Symbol("EventSource");

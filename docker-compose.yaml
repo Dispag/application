@@ -1,5 +1,29 @@
 version: '3.5'
 services:
+
+  queue:
+    image: roribio16/alpine-sqs:latest
+    hostname: queue
+    ports:
+      - 9324:9324
+      - 9325:9325
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - ./docker/alpine-sqs:/opt/custom
+
+
+  start_dependencies:
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    image: dadarek/wait-for-dependencies
+    command: queue:9324 queue:9325
+    depends_on:
+      - queue
+
+
   application:
     image: application
     dns:
