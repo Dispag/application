@@ -5,6 +5,5 @@ export class PagarDebitoError extends Error {
       super(message)
       this.name = PAGARDEBITOERROR
       Object.setPrototypeOf(this, PagarDebitoError.prototype)
-      console.dir(this)
     }
 }

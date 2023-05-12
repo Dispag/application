@@ -5,6 +5,5 @@ export class NovoDebitoError extends Error {
       super(message)
       this.name = NOVODEBITOERROR
       Object.setPrototypeOf(this, NovoDebitoError.prototype)
-      console.dir(this)
     }
 }

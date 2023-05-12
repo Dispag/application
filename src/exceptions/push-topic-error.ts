@@ -5,6 +5,5 @@ export class PushTopicError extends Error {
       super(message)
       this.name = PUSHTOPICERROR
       Object.setPrototypeOf(this, PushTopicError.prototype)
-      console.dir(this)
     }
 }

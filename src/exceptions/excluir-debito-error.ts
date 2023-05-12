@@ -5,6 +5,5 @@ export class ExcluirDebitoError extends Error {
       super(message)
       this.name = EXCLUIRDEBITOERROR
       Object.setPrototypeOf(this, ExcluirDebitoError.prototype)
-      console.dir(this)
     }
 }

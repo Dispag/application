@@ -40,8 +40,6 @@ export class SecurityImpl implements Security{
 
     public gerarToken(params: LoginParams): string{
 
-        console.log(`secret: ${secret}`)
-
         return  sign({ id: params.user, senha: params.senha }, secret, {
             expiresIn: 86400 // validade do token, 24hrs
         });

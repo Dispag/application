@@ -5,6 +5,5 @@ export class QueueNotFoundError extends Error {
       super(message)
       this.name = QUEUE_NOT_FOUND_ERROR
       Object.setPrototypeOf(this, QueueNotFoundError.prototype)
-      console.dir(this)
     }
 }

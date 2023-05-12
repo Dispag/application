@@ -26,7 +26,6 @@ export class RegistrarDebitoImpl implements RegistrarDebito{
     async registrar(params: RegistrarDebitoParams): Promise<void> {
 
         const queueName = process.env.QUEUENAME_REGISTRARDEBITO
-        console.log('Recupereu a Fila..', queueName);
         this.verifyBody(params);
         await this.eventSource.push({
                 queueName,
