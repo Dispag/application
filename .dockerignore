@@ -1,5 +1,6 @@
 # package directories
 node_modules
+docker
 
 # Serverless directories
 .serverless

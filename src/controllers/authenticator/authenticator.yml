@@ -1,7 +1,0 @@
-authenticator:
-      name: authenticator
-      handler: src/controllers/authenticator/authenticator-handler.login
-      events:
-          - http:
-              method: post
-              path: auth/login

@@ -9,7 +9,7 @@ import {
   Security,
   EventSource,
   AuthenticatorUseCase,
-  RegistrarDebito
+  RegistrarDebitoUseCase
  } from './domain/index';
 import { EventSourceImpl } from "./resources/event-source-impl";
 import { SecurityImpl } from "./helpers/security-impl";
@@ -17,8 +17,9 @@ import { DebitoRepositoryImpl } from './repositories/debito-repository-impl';
 import { OrcamentoRepositoryImpl } from "./repositories/orcamento-repository-impl";
 import { UsuarioRepositoryImpl } from "./repositories/usuario-repository-impl";
 import { AuthenticatorController } from './controllers/authenticator/authenticator-controller';
-import { RegistrarDebitoImpl } from "./usecase/registrar-debito-usecase-impl";
+import { RegistrarDebitoUseCaseImpl } from "./usecase/registrar-debito-usecase-impl";
 import { AuthenticatorUseCaseImpl } from "./usecase/authenticator-use-case-impl";
+import { RegistrarDebitoController } from './controllers/command/registrar-debito-controller';
 
 const env = process.env.NODE_ENV;
 const isLocal = env === 'development' || env === 'test' || env === 'docker';
@@ -69,9 +70,12 @@ const sqsFactory = {
       { provide: Security, useClass: SecurityImpl }, 
       { provide: EventSource, useClass: EventSourceImpl },
       { provide: AuthenticatorUseCase,  useClass: AuthenticatorUseCaseImpl },
-      { provide: RegistrarDebito, useClass: RegistrarDebitoImpl }
+      { provide: RegistrarDebitoUseCase, useClass: RegistrarDebitoUseCaseImpl }
     ],
 
-    controllers: [AuthenticatorController]
+    controllers: [
+      AuthenticatorController, 
+      RegistrarDebitoController
+    ]
 })
 export class AppModule {}

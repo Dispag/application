@@ -1,5 +1,5 @@
 
-export interface RegistrarDebitoParams {
+export interface RegistrarDebitoUseCaseParams {
     valor?: string;
     marcacao?: string;
     vencimento?: string;
@@ -13,8 +13,8 @@ export interface RegistrarDebitoParams {
     };
 }
 
-export interface RegistrarDebito {
-    registrar(params: RegistrarDebitoParams): Promise<void>;
+export interface RegistrarDebitoUseCase {
+    registrar(params: RegistrarDebitoUseCaseParams): Promise<void>;
 }
 
-export const RegistrarDebito = Symbol("RegistrarDebito");
+export const RegistrarDebitoUseCase = Symbol("RegistrarDebitoUseCase");

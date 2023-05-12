@@ -1,15 +1,15 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { RegistrarDebito, RegistrarDebitoParams, EventSource } from "../domain";
+import { RegistrarDebitoUseCase, RegistrarDebitoUseCaseParams, EventSource } from "../domain";
 import { AusenciaDadosError } from "../exceptions";
 
 
 @Injectable()
-export class RegistrarDebitoImpl implements RegistrarDebito{
+export class RegistrarDebitoUseCaseImpl implements RegistrarDebitoUseCase{
     
     constructor ( @Inject(EventSource) protected readonly eventSource: EventSource){
     }
 
-    private verifyBody(params: RegistrarDebitoParams): void{
+    private verifyBody(params: RegistrarDebitoUseCaseParams): void{
         if (!params ||
             !params.valor ||
             !params.marcacao ||
@@ -23,7 +23,7 @@ export class RegistrarDebitoImpl implements RegistrarDebito{
             throw new AusenciaDadosError('');
     }
     
-    async registrar(params: RegistrarDebitoParams): Promise<void> {
+    async registrar(params: RegistrarDebitoUseCaseParams): Promise<void> {
 
         const queueName = process.env.QUEUENAME_REGISTRARDEBITO
         this.verifyBody(params);

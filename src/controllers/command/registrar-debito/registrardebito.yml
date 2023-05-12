@@ -1,7 +1,0 @@
-command-novodebito:
-      name: command-registrar-debito-lb
-      handler: src/dispag/functions/command/registrar-debito/registrar-debito-handler.registrarDebito
-      events:
-          - http:
-              method: post
-              path: command/registrardebito
