@@ -1,8 +1,8 @@
 import { Pool } from 'pg';
 import { Test } from '@nestjs/testing';
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { DebitoRepository, SadosDebitos } from '../../domain/index';
-import { RepositoriesModule } from '../repositories-module';
+import { AppModule } from '../../app.module';
 
 
 
@@ -44,7 +44,7 @@ describe('DebitoRepositoryImpl - saldosDebitosNoMes', () => {
         };
 
         const moduleRef = await Test.createTestingModule({
-            imports: [RepositoriesModule ],
+            imports: [ AppModule ],
            
         }).compile();
 

@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { Test } from '@nestjs/testing';
 import { Pool } from 'pg';
 import { Usuario } from '../../domain';
 import { UsuarioRepository } from '../../domain/usuario-repository';
-import { RepositoriesModule } from '../repositories-module';
+import { AppModule } from '../../app.module';
 
 const resultadoEsperado = {
     use_id: faker.datatype.number(),
@@ -40,7 +40,7 @@ describe('UsuarioRepositoryImpl', () => {
             DB_PORT: faker.internet.port().toString(),
         };
         const moduleRef = await Test.createTestingModule({
-            imports: [RepositoriesModule ],
+            imports: [AppModule ],
            
         }).compile();
         usuarioRepository = moduleRef.get<UsuarioRepository>(UsuarioRepository);

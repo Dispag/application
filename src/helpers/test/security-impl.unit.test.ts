@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { LoginParams, Security } from "../../domain/index";
-import { HelpersModule } from "../helpers-module";
+import { AppModule } from "../../app.module";
 
 
 describe('SecurityImpl', () => {
@@ -19,7 +19,7 @@ describe('SecurityImpl', () => {
                 SECRET: faker.internet.password(),
             };
             const moduleRef = await Test.createTestingModule({
-                imports: [HelpersModule ],
+                imports: [AppModule ],
             }).compile();
             security = moduleRef.get<Security>(Security);
         });

@@ -1,29 +1,18 @@
 import "reflect-metadata";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
 import { SQS } from 'aws-sdk';
-import { EventSourceParams, EventSource, EventSourceResponse, ResponseCode } from "../domain/event-source";
+import { EventSourceParams, EventSource } from "../domain/event-source";
 import { QueueNotFoundError } from "../exceptions";
 import { GetQueueUrlResult } from "aws-sdk/clients/sqs";
-
-
-const env = process.env.NODE_ENV;
-const isLocal = env === 'development' || env === 'test' || env === 'docker';
-
-const localSQSParams = {
-  accessKeyId: process.env.MOCK_ACCESS_KEY,
-  secretAccessKey: process.env.MOCK_KEY_ID,
-  endpoint: process.env.MOCK_SQS_ENDPOINT,
-};
-
-const sqs: SQS = isLocal ? new SQS(localSQSParams) : new SQS();
-
 
 @Injectable()
 export class EventSourceImpl implements EventSource {
 
+    constructor (@Inject('SQS') private readonly sqs: SQS){}
+
     private async getQueueUrlByName(queueName: string): Promise<string> {
       try{
-        const queueUrl = await sqs
+        const queueUrl = await this.sqs
           .getQueueUrl({
             QueueName: queueName,
           })
@@ -33,19 +22,14 @@ export class EventSourceImpl implements EventSource {
       }
     }
 
-    async push (params: EventSourceParams): Promise<EventSourceResponse>{
+    async push (params: EventSourceParams): Promise<void>{
         const queueUrl = await this.getQueueUrlByName(params.queueName);
 
         const sendMessageParams = {
             QueueUrl: queueUrl,
             MessageBody: JSON.stringify(params.body),
         };
-        await sqs.sendMessage(sendMessageParams);
-
-        return {
-            responseCode: ResponseCode.OK,
-            message: params.body
-         } as EventSourceResponse;
+        await this.sqs.sendMessage(sendMessageParams);
     }
 
 }

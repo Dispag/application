@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { Test } from '@nestjs/testing';
-import { EventSource, ResponseCode } from '../../domain/event-source';
-import { ResourceModule } from '../resource-modole';
-
+import { SQS } from 'aws-sdk';
+import { EventSource } from '../../domain/event-source';
+import { AppModule } from '../../app.module';
 
 jest.mock('aws-sdk', () => {
     
@@ -10,7 +10,7 @@ jest.mock('aws-sdk', () => {
     
     return {
       SQS: jest.fn().mockImplementation(() => ({
-        getQueueUrl: jest.fn().mockReturnValue( queueUrl) ,  
+        getQueueUrl: jest.fn().mockReturnValue( { QueueUrl: queueUrl } ) ,  
         sendMessage:  jest.fn().mockReturnThis() 
       }))
     };
@@ -26,6 +26,7 @@ describe('EventSourceImpl', () => {
     };
 
     let eventSourceImpl;
+    let sqs;
 
     beforeEach(async () => {
         jest.resetModules();
@@ -35,18 +36,24 @@ describe('EventSourceImpl', () => {
         };
 
         const moduleRef = await Test.createTestingModule({
-            imports: [ResourceModule],
+            imports: [ AppModule ],
            
         }).compile();
 
         eventSourceImpl = moduleRef.get<EventSource>(EventSource);
+        sqs = moduleRef.get<SQS>('SQS');
     });
 
     describe('quando o push e chamada com os parametos corretos', () => {
 
-        it('Deve retorno resposta ok', async () => {
-            const response = await eventSourceImpl.push(params);
-            expect(response.responseCode).toEqual( ResponseCode.OK);
+        it('Deve retorno enviar msg p eventsource', async () => {
+            const expectParams = {
+                
+                QueueUrl: 'http://0.0.0.0:9324/000000000000/QUEUTESTE',
+                MessageBody: JSON.stringify(params.body),
+            }
+            await eventSourceImpl.push(params);
+            expect(sqs.sendMessage).toHaveBeenCalledWith(expectParams);
         });
     });
 

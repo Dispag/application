@@ -12,3 +12,5 @@ export * from './sados-debitos';
 export * from './usuario-repository';
 export * from './enums/status-code';
 export * from './security';
+export * from './registrar-debito-usecase';
+export * from './authenticator-use-case';

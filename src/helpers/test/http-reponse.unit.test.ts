@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { StatusCode } from '../../domain/index';
 import { AusenciaHeadersFundamentaisError, PushTopicError, TokenExpiradoError } from "../../exceptions/index";
 import { HttpResponse } from '../http-response';

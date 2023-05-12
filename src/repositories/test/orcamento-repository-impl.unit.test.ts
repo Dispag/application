@@ -1,9 +1,9 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { Test } from '@nestjs/testing';
 import { Pool } from 'pg';
 import { Orcamento } from '../../domain';
 import { OrcamentoRepository } from '../../domain/orcamento-repository';
-import { RepositoriesModule } from '../repositories-module';
+import { AppModule } from '../../app.module';
 
 
 const resultadoEsperado = {
@@ -43,7 +43,7 @@ describe('OrcamentoRepositoryImpl', () => {
             DB_PORT: faker.internet.port().toString(),
         };
         const moduleRef = await Test.createTestingModule({
-            imports: [RepositoriesModule ],
+            imports: [ AppModule ],
            
         }).compile();
        

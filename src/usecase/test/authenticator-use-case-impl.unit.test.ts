@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { AuthenticatorUseCaseImpl } from '../authenticator-use-case-impl';
 import { StatusCode } from '../../domain/index';
 

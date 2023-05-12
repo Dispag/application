@@ -9,7 +9,7 @@ import { APIGatewayProxyHandler, APIGatewayTokenAuthorizerEvent,
 import * as awsServerlessExpress from 'aws-serverless-express';
 import { Server } from 'http';
 import * as express from 'express';
-import { AppModule } from '../appModule/app.module';
+import { AppModule } from '../app.module';
 
 
 let cachedServer: Server;

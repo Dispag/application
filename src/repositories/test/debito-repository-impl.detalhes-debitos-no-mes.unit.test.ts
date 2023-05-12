@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker';
+import * as faker from 'faker';
 import { Test } from '@nestjs/testing';
 import { Pool } from 'pg';
 import { DebitoRepository, DetalhesDebitos } from '../../domain/index';
-import { RepositoriesModule } from '../repositories-module';
+import { AppModule } from '../../app.module';
 
 const resultadoEsperado = {
     vencimento: faker.date.future().toString(),
@@ -42,7 +42,7 @@ describe('DebitoRepositoryImpl - detalhesDebitosNoMes', () => {
         };
 
         const moduleRef = await Test.createTestingModule({
-            imports: [RepositoriesModule ],
+            imports: [AppModule ],
            
         }).compile();
 
