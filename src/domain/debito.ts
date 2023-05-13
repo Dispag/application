@@ -2,16 +2,13 @@ import { Credor } from "./credor";
 import { Orcamento } from "./orcamento";
 
 export interface Debito {
+  valor: number;
 
-    valor: number;
+  marcacao: string;
 
-    marcacao: string;
+  credor: Credor;
 
-    credor: Credor;
+  orcamento: Orcamento;
 
-    orcamento: Orcamento;
-
-    vencimento: Date;
-
+  vencimento: Date;
 }
-

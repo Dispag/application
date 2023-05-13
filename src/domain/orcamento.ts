@@ -1,17 +1,13 @@
-
 export interface Orcamento {
+  mes?: string;
 
-    mes?: string;
+  ano?: string;
 
-    ano?: string;
+  receita?: number;
 
-    receita?: number;
-    
-    avulsos?: number;
-    
-    basicos?: number;
-    
-    recorrentes?: number;
+  avulsos?: number;
+
+  basicos?: number;
+
+  recorrentes?: number;
 }
-
-

@@ -1,7 +1,5 @@
-
 export interface Credor {
+  descricao: string;
 
-    descricao: string;
-
-    tipo: string;
+  tipo: string;
 }
